@@ -1,153 +1,80 @@
-<script>
-// ---------- navigation ----------
-function goTo(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// ---------- CANCION DE INICIO: suena en todas las pantallas ----------
-// CAMBIA "TWICE - YES or YES - (Sub Español) MV.mp3" por el nombre real de tu cancion
-const introAudio = new Audio('TWICE - YES or YES -(Sub Español) MV.mp3');
-introAudio.loop = true;
-introAudio.play().catch(()=>{});
-
-// ---------- screen 1: falling sunflowers ----------
-function makeSunflowerHTML(size){
-  let petals = '';
-  for(let i=0;i<10;i++){
-    petals += `<div style="position:absolute;width:${size*0.16}px;height:${size*0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size*0.42}px;transform-origin:bottom center;transform:rotate(${i*36}deg);"></div>`;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primavera 🌻</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dusk-1:#2c1b3d;
+    --dusk-2:#4a2a4f;
+    --sunflower:#f5b942;
+    --sunflower-dark:#a8621c;
+    --tulip:#e8547c;
+    --tulip-dark:#b23a5c;
+    --leaf:#3f7a45;
+    --cream:#fff6e6;
+    --ink:#2c1b3d;
   }
-  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size*0.36}px;height:${size*0.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*0.32}px;left:${size*0.32}px;"></div></div>`;
-}
-
-const fallContainer = document.getElementById('fallContainer');
-const NUM_FLOWERS = 16;
-for(let i=0;i<NUM_FLOWERS;i++){
-  const el = document.createElement('div');
-  el.className = 'falling-flower';
-  const size = 24 + Math.random()*28;
-  el.innerHTML = makeSunflowerHTML(size);
-  el.style.left = Math.random()*100 + 'vw';
-  const fallDuration = 6 + Math.random()*6;
-  const spinDuration = 3 + Math.random()*4;
-  el.style.animationDuration = fallDuration + 's, ' + spinDuration + 's';
-  el.style.animationDelay = (-Math.random()*fallDuration) + 's, ' + (-Math.random()*spinDuration) + 's';
-  fallContainer.appendChild(el);
-}
-
-// ---------- screen 3B: photo heart (fotos precargadas) ----------
-const heartMask = [
-  "01010",
-  "11111",
-  "11111",
-  "01110",
-  "00100"
-];
-const heartGrid = document.getElementById('heartGrid');
-const tileSize = 58, gap = 6;
-let cols = heartMask[0].length;
-let totalWidth = cols*(tileSize+gap);
-heartGrid.style.width = totalWidth + 'px';
-
-// FOTOS: subí tus fotos a la carpeta fotos/ con estos nombres
-const fotos = [
-  "fondo.jpg", "fotos/foto2.jpg", "fotos/foto3.jpg", "fotos/foto4.jpg", "fotos/foto5.jpg",
-  "fotos/foto6.jpg", "WhatsApp Image 2026-03-31 at 00.51.29.jpg", "WhatsApp Image 2026-03-31 at 01.11.57.jpg", "WhatsApp Image 2026-03-31 at 00.52.29.jpg", "WhatsApp Image 2026-09-21 at 15.41.18.jpg",
-  "WhatsApp Image 2026-09-21 at 15.41.14.jpg", "IMG_3443.jpg", "a33a0dd0-ecbf-44aa-bd2a-4495fbff59be.jpg", "A6C5E3DD-2C5D-4365-850E-C12D55E58A13.jpg", "BCB3CCC3-3D60-4D12-8EE1-D6F658CAB21A.jpg",
-  "a56f792d-86d5-4c1f-9c3d-e1df7b74d63a.jpg", "774a8b5d-d1cb-48c7-b312-9611791ed395.jpg", "WhatsApp Image 2026-09-15 at 18.22.32.jpg", "WhatsApp Image 2026-09-21 at 15.35.49.jpg", "WhatsApp Image 2026-09-21 at 15.51.57.jpg",
-  "WhatsApp Image 2026-09-21 at 15.55.26.jpg", "382f6a47-77fe-4dc3-9b54-84b8f3fe3e6d.jpg", "IMG-20250214-WA0038.jpg"
-];
-
-let idx = 0;
-heartMask.forEach((row, r) => {
-  [...row].forEach((cell, c) => {
-    if(cell === '1'){
-      const tile = document.createElement('div');
-      tile.className = 'heart-tile';
-      tile.style.width = tileSize+'px';
-      tile.style.height = tileSize+'px';
-      tile.style.top = (r*(tileSize+gap)) + 'px';
-      tile.style.left = (c*(tileSize+gap)) + 'px';
-      tile.style.backgroundImage = `url(${fotos[idx]})`;
-      tile.style.backgroundSize = 'cover';
-      idx++;
-      heartGrid.appendChild(tile);
-    }
-  });
-});
-heartGrid.style.height = (heartMask.length*(tileSize+gap)) + 'px';
-
-// ---------- screen 3C: big rotating sunflower ----------
-document.getElementById('bigSun').innerHTML = (function(){
-  let petals = '';
-  for(let i=0;i<12;i++){
-    petals += `<div class="petal-big" style="transform:rotate(${i*30}deg);"></div>`;
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; width:100%; height:100%; overflow:hidden;
+    font-family:'Quicksand', sans-serif;
+    background:var(--dusk-1);
+    color:var(--cream);
   }
-  return petals + '<div class="flower-center-big"></div>';
-})();
+  .screen{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    opacity:0; visibility:hidden;
+    transition:opacity .8s ease;
+    padding:24px;
+    text-align:center;
+  }
+  .screen.active{opacity:1; visibility:visible;}
 
-// ---------- screen 3C: phrases + playlist ----------
-const phrases = [
-  "Cada día contigo es mi flor favorita 🌻",
-  "Sos la razón de mi mejor sonrisa",
-  "Con vos hasta lo simple se vuelve especial",
-  "Me encanta girar mi día alrededor tuyo",
-  "Sos mi lugar favorito para volver",
-  "Feliz inicio de primavera, te amo"
-];
-const songTitles = [
-  "MILO J, BHAVI - OJALA.mp3",
-  "WINNER - 'MILLIONS' M V.",
-  "iKON - '사랑을 했다(LOVE SCENARIO)' M V.mp3",
-  "TXT-Run Away (Sub. Español).mp3",
-  "Callejeros - 9 de Julio (Letra).mp3",
-  "TWICE - LIKEY - (Sub Español) MV.mp3"
-];
+  h1,h2{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    margin:0 0 18px 0;
+    line-height:1.15;
+  }
 
-const phraseList = document.getElementById('phraseList');
-const songList = document.getElementById('songList');
-const nowPlaying = document.getElementById('nowPlaying');
-const playerAudio = document.getElementById('playerAudio');
+  /* ---------- SCREEN 1: falling sunflowers ---------- */
+  #screen-fall{ background: radial-gradient(ellipse at 50% 20%, var(--dusk-2), var(--dusk-1) 70%); }
+  .fall-container{position:absolute; inset:0; overflow:hidden; pointer-events:none;}
+  .falling-flower{
+    position:absolute; top:-60px;
+    animation-name: fall, spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fall{
+    from{ transform: translateY(-10vh); }
+    to{ transform: translateY(110vh); }
+  }
+  @keyframes spin{
+    from{ rotate: 0deg; }
+    to{ rotate: 360deg; }
+  }
+  .press-btn{
+    position:relative; z-index:5;
+    background:var(--sunflower);
+    color:var(--ink);
+    border:none;
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    padding:16px 38px;
+    border-radius:40px;
+    cursor:pointer;
+    box-shadow:0 6px 0 var(--sunflower-dark);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .press-btn:active{ transform:translateY(6px); box-shadow:0 0 0 var(--sunflower-dark); }
+  #screen-fall h1{ position:relative; z-index:5; font-size:2rem; max-width:20ch; }
 
-phrases.forEach((text, i) => {
-  const item = document.createElement('div');
-  item.className = 'phrase-item';
-  item.innerHTML = `
-    <div class="mini-sun">
-      ${[0,60,120,180,240,300].map(a => `<div class="p" style="transform:rotate(${a}deg);"></div>`).join('')}
-      <div class="c"></div>
-    </div>
-    <div class="phrase-text">${text}</div>
-  `;
-  item.onclick = () => {
-    document.querySelectorAll('.phrase-item').forEach(p => p.classList.remove('selected'));
-    item.classList.add('selected');
-    playTrack(i);
-  };
-  phraseList.appendChild(item);
-});
-
-songTitles.forEach((title, i) => {
-  const item = document.createElement('div');
-  item.className = 'song-item';
-  item.id = 'song-' + i;
-  item.innerHTML = `
-    <div class="song-name">${title}</div>
-    <div class="song-actions">
-      <button onclick="playTrack(${i})">▶</button>
-    </div>
-  `;
-  songList.appendChild(item);
-});
-
-// ---------- PLAYLIST: al elegir una cancion, DETIENE la de inicio ----------
-function playTrack(i){
-  introAudio.pause();          // <-- detiene la cancion de fondo
-  document.querySelectorAll('.song-item').forEach(s => s.classList.remove('playing'));
-  document.getElementById('song-' + i).classList.add('playing');
-  playerAudio.src = 'canciones/' + (i+1) + '.mp3';
-  playerAudio.play().catch(()=>{});
-  nowPlaying.textContent = '▶ Sonando: ' + songTitles[i];
-}
-</script>
-
+  /* ---------- SCREEN 2: te
