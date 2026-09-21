@@ -291,7 +291,7 @@ function makeSunflowerHTML(size){
   for(let i=0;i<10;i++){
     petals += `<div style="position:absolute;width:${size*0.16}px;height:${size*0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size*0.42}px;transform-origin:bottom center;transform:rotate(${i*36}deg);"></div>`;
   }
-  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size*0.36}px;height:${size*0.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*0.32}px;left:${size*0.32}px;"></div></div>`;
+  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size*0.36}px;height:${size*0.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*0.32}px;left:${size*0.32}px;box-shadow:inset 0 0 4px rgba(0,0,0,.5);"></div></div>`;
 }
 
 const fallContainer = document.getElementById('fallContainer');
@@ -323,7 +323,7 @@ let cols = heartMask[0].length;
 let totalWidth = cols*(tileSize+gap);
 heartGrid.style.width = totalWidth + 'px';
 
-// FOTOS: foto 1 a foto 13 con sus extensiones reales
+// FOTOS: foto 1 a foto 16 con sus extensiones reales
 const fotos = [
   "fotos/foto 1.jpg",
   "fotos/foto 2.JPEG",
@@ -337,7 +337,10 @@ const fotos = [
   "fotos/foto 10.jpeg",
   "fotos/foto 11.JPEG",
   "fotos/foto 12.JPEG",
-  "fotos/foto 13.JPEG"
+  "fotos/foto 13.JPEG",
+  "fotos/foto 14.PNG",
+  "fotos/foto 15.PNG",
+  "fotos/foto 16.JPEG"
 ];
 
 let idx = 0;
@@ -350,8 +353,12 @@ heartMask.forEach((row, r) => {
       tile.style.height = tileSize+'px';
       tile.style.top = (r*(tileSize+gap)) + 'px';
       tile.style.left = (c*(tileSize+gap)) + 'px';
-      tile.style.backgroundImage = `url(${fotos[idx]})`;
-      tile.style.backgroundSize = 'cover';
+      
+      if(fotos[idx]){
+        const ruta = encodeURI(fotos[idx]);
+        tile.style.backgroundImage = `url("${ruta}")`;
+      }
+      
       idx++;
       heartGrid.appendChild(tile);
     }
@@ -438,4 +445,3 @@ function playTrack(i){
 </script>
 </body>
 </html>
-
