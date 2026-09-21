@@ -284,53 +284,53 @@ function goTo(id){
 // ---------- CANCION DE INICIO ----------
 const introAudio = new Audio('canciones/inicio.mp3');
 introAudio.loop = true;
-introAudio.play().catch(()=>{});
+introAudio.play().catch(() => {});
 
 // ---------- screen 1: falling sunflowers ----------
 function makeSunflowerHTML(size){
   let petals = '';
-  for(let i=0;i<10;i++){
-    petals += `<div style="position:absolute;width:${size*0.16}px;height:${size*0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size*0.42}px;transform-origin:bottom center;transform:rotate(${i*36}deg);"></div>`;
+  for(let i = 0; i < 10; i++){
+    petals += `<div style="position:absolute;width:${size * 0.16}px;height:${size * 0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size * 0.42}px;transform:rotate(${i * 36}deg);transform-origin:bottom center;"></div>`;
   }
-  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size*0.36}px;height:${size*0.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*0.32}px;left:${size*0.32}px;"></div></div>`;
+  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size * 0.36}px;height:${size * 0.36}px;border-radius:50%;background:radial-gradient(circle,#f6d56a,#a8621c);top:${size * 0.32}px;left:${size * 0.32}px;"></div></div>`;
 }
 
 const fallContainer = document.getElementById('fallContainer');
 const NUM_FLOWERS = 16;
-for(let i=0;i<NUM_FLOWERS;i++){
+for(let i = 0; i < NUM_FLOWERS; i++){
   const el = document.createElement('div');
   el.className = 'falling-flower';
-  const size = 24 + Math.random()*28;
+  const size = 24 + Math.random() * 28;
   el.innerHTML = makeSunflowerHTML(size);
-  el.style.left = Math.random()*100 + 'vw';
-  const fallDuration = 6 + Math.random()*6;
-  const spinDuration =  ́3 + Math.random()*4;
+  el.style.left = Math.random() * 100 + 'vw';
+  const fallDuration = 6 + Math.random() * 6;
+  const spinDuration = 3 + Math.random() * 4;
   el.style.animationDuration = fallDuration + 's, ' + spinDuration + 's';
-  el.style.animationDelay = (-Math.random()*fallDuration) + 's, ' + (-Math.random()*spinDuration) + 's';
+  el.style.animationDelay = (-Math.random() * fallDuration) + 's, ' + (-Math.random() * spinDuration) + 's';
   fallContainer.appendChild(el);
 }
 
 // ---------- screen 3B: photo heart ----------
 const heartMask = [
-  "01010",
-  "11111",
-  "11111",
-  "01110",
-  "00100"
+  '01010',
+  '11111',
+  '11111',
+  '01110',
+  '00100'
 ];
 const heartGrid = document.getElementById('heartGrid');
 const tileSize = 58, gap = 6;
 let cols = heartMask[0].length;
-let totalWidth = cols*(tileSize+gap);
+let totalWidth = cols * (tileSize + gap);
 heartGrid.style.width = totalWidth + 'px';
 
 // FOTOS: renombra tus fotos a foto1.jpg, foto2.jpg, etc. en la carpeta fotos/
 const fotos = [
-  "fotos/foto1.jpg", "fotos/foto2.jpg", "fotos/foto3.jpg", "fotos/foto4.jpg", "fotos/foto5.jpg",
-  "fotos/foto6.jpg", "fotos/foto7.jpg", "fotos/foto8.jpg", "fotos/foto9.jpg", "fotos/foto10.jpg",
-  "fotos/foto11.jpg", "fotos/foto12.jpg", "fotos/foto13.jpg", "fotos/foto14.jpg", "fotos/foto15.jpg",
-  "fotos/foto16.jpg", "fotos/foto17.jpg", "fotos/foto18.jpg", "fotos/foto19.jpg", "fotos/foto20.jpg",
-  "fotos/foto21.jpg", "fotos/foto22.jpg", "fotos/foto23.jpg"
+  'fotos/foto1.jpg', 'fotos/foto2.jpg', 'fotos/foto3.jpg', 'fotos/foto4.jpg', 'fotos/foto5.jpg',
+  'fotos/foto6.jpg', 'fotos/foto7.jpg', 'fotos/foto8.jpg', 'fotos/foto9.jpg', 'fotos/foto10.jpg',
+  'fotos/foto11.jpg', 'fotos/foto12.jpg', 'fotos/foto13.jpg', 'fotos/foto14.jpg', 'fotos/foto15.jpg',
+  'fotos/foto16.jpg', 'fotos/foto17.jpg', 'fotos/foto18.jpg', 'fotos/foto19.jpg', 'fotos/foto20.jpg',
+  'fotos/foto21.jpg', 'fotos/foto22.jpg', 'fotos/foto23.jpg'
 ];
 
 let idx = 0;
@@ -339,10 +339,10 @@ heartMask.forEach((row, r) => {
     if(cell === '1'){
       const tile = document.createElement('div');
       tile.className = 'heart-tile';
-      tile.style.width = tileSize+'px';
-      tile.style.height = tileSize+'px';
-      tile.style.top = (r*(tileSize+gap)) + 'px';
-      tile.style.left = (c*(tileSize+gap)) + 'px';
+      tile.style.width = tileSize + 'px';
+      tile.style.height = tileSize + 'px';
+      tile.style.top = (r * (tileSize + gap)) + 'px';
+      tile.style.left = (c * (tileSize + gap)) + 'px';
       tile.style.backgroundImage = `url(${fotos[idx]})`;
       tile.style.backgroundSize = 'cover';
       idx++;
@@ -350,33 +350,33 @@ heartMask.forEach((row, r) => {
     }
   });
 });
-heartGrid.style.height = (heartMask.length*(tileSize+gap)) + 'px';
+heartGrid.style.height = (heartMask.length * (tileSize + gap)) + 'px';
 
 // ---------- screen 3C: big rotating sunflower ----------
 document.getElementById('bigSun').innerHTML = (function(){
   let petals = '';
-  for(let i=0;i<12;i++){
-    petals += `<div class="petal-big" style="transform:rotate(${i*30}deg);"></div>`;
+  for(let i = 0; i < 12; i++){
+    petals += `<div class="petal-big" style="transform:rotate(${i * 30}deg);"></div>`;
   }
   return petals + '<div class="flower-center-big"></div>';
 })();
 
 // ---------- screen 3C: phrases + playlist ----------
 const phrases = [
-  "Cada día contigo es mi flor favorita 🌻",
-  "Sos la razón de mi mejor sonrisa",
-  "Con vos hasta lo simple se vuelve especial",
-  "Me encanta girar mi día alrededor tuyo",
-  "Sos mi lugar favorito para volver",
-  "Feliz inicio de primavera, te amo"
+  'Cada día contigo es mi flor favorita 🌻',
+  'Sos la razón de mi mejor sonrisa',
+  'Con vos hasta lo simple se vuelve especial',
+  'Me encanta girar mi día alrededor tuyo',
+  'Sos mi lugar favorito para volver',
+  'Feliz inicio de primavera, te amo'
 ];
 const songTitles = [
-  "MILO J, BHAVI - OJALA.mp3",
+  'MILO J, BHAVI - OJALA.mp3',
   "WINNER - 'MILLIONS' M V.",
   "iKON - '사랑을 했다(LOVE SCENARIO)' M V.mp3",
-  "TXT-Run Away (Sub. Español).mp3",
-  "Callejeros - 9 de Julio (Letra).mp3",
-  "TWICE - LIKEY -(Sub Español) MV.mp3"
+  'TXT-Run Away (Sub. Español).mp3',
+  'Callejeros - 9 de Julio (Letra).mp3',
+  'TWICE - LIKEY -(Sub Español) MV.mp3'
 ];
 
 const phraseList = document.getElementById('phraseList');
@@ -419,9 +419,10 @@ songTitles.forEach((title, i) => {
 function playTrack(i){
   introAudio.pause();
   document.querySelectorAll('.song-item').forEach(s => s.classList.remove('playing'));
-  document.getElementById('song-' + i).classList.add('playing');
-  playerAudio.src = 'canciones/' + (i+1) + '.mp3';
-  playerAudio.play().catch(()=>{});
+  const songEl = document.getElementById('song-' + i);
+  if(songEl) songEl.classList.add('playing');
+  playerAudio.src = 'canciones/' + (i + 1) + '.mp3';
+  playerAudio.play().catch(() => {});
   nowPlaying.textContent = '▶ Sonando: ' + songTitles[i];
 }
 </script>
