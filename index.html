@@ -17,66 +17,40 @@
     --leaf:#3f7a45;
     --cream:#fff6e6;
     --ink:#2c1b3d;
-    --glass:rgba(255,255,255,0.08);
-    --glass-strong:rgba(255,255,255,0.14);
-    --shadow:rgba(17, 10, 21, 0.38);
   }
-
-  *{ box-sizing:border-box; }
+  *{box-sizing:border-box;}
   html,body{
     margin:0; padding:0; width:100%; height:100%; overflow:hidden;
     font-family:'Quicksand', sans-serif;
     background:var(--dusk-1);
     color:var(--cream);
   }
-
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background:radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 35%);
-    pointer-events:none;
-  }
-
   .screen{
     position:fixed; inset:0;
     display:flex; align-items:center; justify-content:center;
     flex-direction:column;
     opacity:0; visibility:hidden;
-    transition:opacity .8s ease, transform .8s ease;
+    transition:opacity .8s ease;
     padding:24px;
     text-align:center;
-    transform:translateY(12px);
   }
-  .screen.active{
-    opacity:1; visibility:visible;
-    transform:translateY(0);
-  }
+  .screen.active{opacity:1; visibility:visible;}
 
   h1,h2{
     font-family:'Playfair Display', serif;
     font-weight:700;
     margin:0 0 18px 0;
     line-height:1.15;
-    letter-spacing:.02em;
   }
 
-  #screen-fall, #screen-ask, #screen-tulips, #screen-heart, #screen-flower {
-    background-attachment:fixed;
-  }
-
+  /* ---------- SCREEN 1: falling sunflowers ---------- */
   #screen-fall{ background: radial-gradient(ellipse at 50% 20%, var(--dusk-2), var(--dusk-1) 70%); }
-  #screen-ask{ background: radial-gradient(ellipse at 50% 30%, var(--dusk-2), var(--dusk-1) 75%); }
-  #screen-tulips{ background: linear-gradient(180deg, var(--dusk-1), #6b2f47 100%); }
-  #screen-heart{ background: linear-gradient(180deg, var(--dusk-1), #3a2450 100%); overflow-y:auto; padding:40px 20px; }
-  #screen-flower{ background: radial-gradient(ellipse at 50% 15%, var(--dusk-2), var(--dusk-1) 70%); flex-direction:row; flex-wrap:wrap; align-items:flex-start; padding-top:30px; overflow-y:auto; }
-
   .fall-container{position:absolute; inset:0; overflow:hidden; pointer-events:none;}
   .falling-flower{
     position:absolute; top:-60px;
     animation-name: fall, spin;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    filter:drop-shadow(0 6px 8px rgba(0,0,0,.25));
   }
   @keyframes fall{
     from{ transform: translateY(-10vh); }
@@ -86,10 +60,9 @@
     from{ rotate: 0deg; }
     to{ rotate: 360deg; }
   }
-
   .press-btn{
     position:relative; z-index:5;
-    background:linear-gradient(180deg, #ffd66a, var(--sunflower));
+    background:var(--sunflower);
     color:var(--ink);
     border:none;
     font-family:'Quicksand', sans-serif;
@@ -98,33 +71,34 @@
     padding:16px 38px;
     border-radius:40px;
     cursor:pointer;
-    box-shadow:0 8px 0 var(--sunflower-dark), 0 14px 30px rgba(245,185,66,.35);
-    transition:transform .15s ease, box-shadow .15s ease, filter .2s ease;
-    letter-spacing:.02em;
+    box-shadow:0 6px 0 var(--sunflower-dark);
+    transition:transform .15s ease, box-shadow .15s ease;
   }
-  .press-btn:hover{ filter:brightness(1.03); }
-  .press-btn:active{ transform:translateY(8px); box-shadow:0 0 0 var(--sunflower-dark); }
-  #screen-fall h1{ position:relative; z-index:5; font-size:clamp(2rem, 5vw, 3rem); max-width:20ch; text-shadow:0 3px 18px rgba(0,0,0,.35); }
+  .press-btn:active{ transform:translateY(6px); box-shadow:0 0 0 var(--sunflower-dark); }
+  #screen-fall h1{ position:relative; z-index:5; font-size:2rem; max-width:20ch; }
 
-  .options{ display:flex; flex-direction:column; gap:16px; width:100%; max-width:360px; }
+  /* ---------- SCREEN 2: te gusto ---------- */
+  #screen-ask{ background: radial-gradient(ellipse at 50% 30%, var(--dusk-2), var(--dusk-1) 75%); }
+  #screen-ask h1{ font-size:2.6rem; margin-bottom:34px; }
+  .options{ display:flex; flex-direction:column; gap:16px; width:100%; max-width:340px; }
   .opt-btn{
     font-family:'Quicksand', sans-serif;
     font-weight:600;
     font-size:1.05rem;
     padding:16px 20px;
-    border-radius:18px;
+    border-radius:16px;
     border:2px solid transparent;
     cursor:pointer;
-    transition:transform .15s ease, border-color .2s ease, box-shadow .2s ease;
-    box-shadow:0 8px 18px rgba(0,0,0,.15);
+    transition:transform .15s ease, border-color .2s ease;
   }
-  .opt-btn:hover{ border-color:currentColor; box-shadow:0 10px 22px rgba(0,0,0,.18); }
   .opt-btn:active{ transform:scale(.97); }
-  .opt-1{ background:linear-gradient(180deg, #fffaf2, var(--cream)); color:var(--ink); }
-  .opt-2{ background:linear-gradient(180deg, #ef5c8a, var(--tulip)); color:var(--cream); }
-  .opt-3{ background:linear-gradient(180deg, #ffd769, var(--sunflower)); color:var(--ink); font-weight:700; }
-  #screen-ask h1{ font-size:clamp(2.2rem, 5vw, 3.1rem); margin-bottom:34px; }
+  .opt-1{ background:var(--cream); color:var(--ink); }
+  .opt-2{ background:var(--tulip); color:var(--cream); }
+  .opt-3{ background:var(--sunflower); color:var(--ink); font-weight:700; }
+  .opt-btn:hover{ border-color:currentColor; }
 
+  /* ---------- SCREEN 3A: tulips ---------- */
+  #screen-tulips{ background: linear-gradient(180deg, var(--dusk-1), #6b2f47 100%); }
   .bouquet{ display:flex; gap:6px; align-items:flex-end; margin-bottom:8px; }
   .tulip{ width:44px; height:130px; position:relative; animation:sway 3.2s ease-in-out infinite; transform-origin:bottom center; }
   .tulip:nth-child(2){ animation-delay:.3s; }
@@ -140,40 +114,40 @@
   .tulip-petal.p2{ left:9px; z-index:2; }
   .tulip-petal.p3{ right:0; transform:rotate(14deg); }
   #screen-tulips p.note{ max-width:26ch; font-size:1.05rem; margin-top:14px; opacity:.9; }
-  #screen-tulips audio{ width:min(86vw, 320px); }
 
+  /* ---------- SCREEN 3B: photo heart ---------- */
+  #screen-heart{ background: linear-gradient(180deg, var(--dusk-1), #3a2450 100%); overflow-y:auto; padding:40px 20px; }
   .heart-grid{
     position:relative;
     width:280px; height:250px;
     margin:0 auto 20px auto;
-    filter:drop-shadow(0 12px 18px rgba(0,0,0,.25));
   }
   .heart-tile{
     position:absolute;
     width:34px; height:34px;
-    border-radius:10px;
+    border-radius:8px;
     background:var(--sunflower);
     background-size:cover;
     background-position:center;
-    border:2px solid rgba(255,255,255,.75);
+    border:2px solid var(--cream);
     box-shadow:0 3px 8px rgba(0,0,0,.35);
     display:flex; align-items:center; justify-content:center;
     font-size:0.6rem;
     color:var(--ink);
     cursor:pointer;
     overflow:hidden;
-    transition:transform .18s ease, box-shadow .2s ease;
   }
-  .heart-tile:hover{ transform:scale(1.05); box-shadow:0 6px 12px rgba(0,0,0,.38); }
-  #screen-heart h2{ color:var(--sunflower); font-size:clamp(1.5rem, 3vw, 2.1rem); margin-top:6px; text-shadow:0 4px 16px rgba(245,185,66,.18); }
+  #screen-heart h2{ color:var(--sunflower); font-size:1.5rem; margin-top:6px; }
   #screen-heart .sub{ font-size:.9rem; opacity:.75; max-width:28ch; margin:0 auto 18px auto; }
 
+  /* ---------- SCREEN 3C: sunflower + playlist ---------- */
+  #screen-flower{ background: radial-gradient(ellipse at 50% 15%, var(--dusk-2), var(--dusk-1) 70%); flex-direction:row; flex-wrap:wrap; align-items:flex-start; padding-top:30px; overflow-y:auto; }
   .flower-hero{ width:100%; display:flex; flex-direction:column; align-items:center; margin-bottom:10px; }
-  .sunflower-big{ width:130px; height:130px; position:relative; animation:rotate-cw 14s linear infinite; margin-bottom:8px; filter:drop-shadow(0 10px 18px rgba(0,0,0,.2)); }
+  .sunflower-big{ width:130px; height:130px; position:relative; animation:rotate-cw 14s linear infinite; margin-bottom:8px; }
   @keyframes rotate-cw{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
   .petal-big{ position:absolute; width:26px; height:54px; background:linear-gradient(180deg, var(--sunflower), #d99a1f); border-radius:50% 50% 0 0; top:0; left:52px; transform-origin:bottom center; }
   .flower-center-big{ position:absolute; width:46px; height:46px; border-radius:50%; background:radial-gradient(circle,#7a4a1e,#4a2c10); top:42px; left:42px; box-shadow:inset 0 0 8px rgba(0,0,0,.5); }
-  #screen-flower h2{ font-size:clamp(1.3rem, 3vw, 1.9rem); color:var(--sunflower); margin-bottom:0; }
+  #screen-flower h2{ font-size:1.3rem; color:var(--sunflower); margin-bottom:0; }
 
   .two-col{ display:flex; width:100%; gap:18px; flex-wrap:wrap; justify-content:center; }
   .col{ flex:1 1 260px; min-width:240px; max-width:340px; }
@@ -182,17 +156,15 @@
   .phrase-list{ display:flex; flex-direction:column; gap:10px; }
   .phrase-item{
     display:flex; align-items:center; gap:10px;
-    background:var(--glass);
+    background:rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(6px);
     border-radius:14px;
     padding:10px 12px;
     text-align:left;
     cursor:pointer;
-    transition:background .2s ease, border-color .2s ease, transform .2s ease;
-    box-shadow:0 10px 18px rgba(0,0,0,.08);
+    transition:background .2s ease, border-color .2s ease;
   }
-  .phrase-item:hover, .phrase-item.selected{ background:rgba(245,185,66,.18); border-color:var(--sunflower); transform:translateY(-1px); }
+  .phrase-item:hover, .phrase-item.selected{ background:rgba(245,185,66,.18); border-color:var(--sunflower); }
   .mini-sun{ width:24px; height:24px; flex-shrink:0; position:relative; }
   .mini-sun .p{ position:absolute; width:6px; height:12px; background:var(--sunflower); border-radius:50% 50% 0 0; top:0; left:9px; transform-origin:bottom center; }
   .mini-sun .c{ position:absolute; width:10px; height:10px; border-radius:50%; background:#5c3a18; top:7px; left:7px; }
@@ -201,45 +173,22 @@
   .song-list{ display:flex; flex-direction:column; gap:8px; }
   .song-item{
     display:flex; align-items:center; justify-content:space-between; gap:8px;
-    background:var(--glass);
+    background:rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(6px);
     border-radius:12px;
     padding:9px 12px;
     text-align:left;
-    transition:all .2s ease;
   }
   .song-item.playing{ border-color:var(--tulip); background:rgba(232,84,124,.15); }
   .song-name{ font-size:.85rem; }
   .song-actions{ display:flex; align-items:center; gap:6px; }
   .song-actions button{
     font-size:.75rem;
-    background:linear-gradient(180deg, #ffd66a, var(--sunflower));
-    color:var(--ink);
+    background:var(--sunflower); color:var(--ink);
     border:none; border-radius:20px; padding:6px 10px; cursor:pointer; font-family:'Quicksand',sans-serif; font-weight:700;
-    box-shadow:0 4px 10px rgba(245,185,66,.25);
-    transition:transform .12s ease;
   }
-  .song-actions button:active{ transform:scale(.96); }
   .now-playing{
     margin-top:12px; font-size:.8rem; opacity:.85; min-height:1.2em;
-    text-shadow:0 2px 8px rgba(0,0,0,.2);
-  }
-
-  .audio-controls{
-    display:flex; align-items:center; justify-content:center;
-    gap:10px;
-    margin-top:12px;
-  }
-  .audio-toggle{
-    border:none; border-radius:999px;
-    background:rgba(255,255,255,.12);
-    color:var(--cream);
-    border:1px solid rgba(255,255,255,.2);
-    padding:8px 12px;
-    cursor:pointer;
-    font-family:'Quicksand', sans-serif;
-    font-weight:600;
   }
 
   .back-btn{
@@ -253,21 +202,12 @@
     padding:8px 14px;
     border-radius:20px;
     cursor:pointer;
-    transition:background .2s ease, transform .2s ease;
+    transition:background .2s ease;
   }
   .back-btn:hover{ background:rgba(255,255,255,.22); }
-  .back-btn:active{ transform:scale(.98); }
-
-  @media (max-width: 480px){
-    .screen{ padding:18px 14px; }
-    .options{ max-width:300px; }
-    .col{ min-width:0; }
-    .song-name{ font-size:.8rem; }
-  }
 
   @media (prefers-reduced-motion: reduce){
     .falling-flower, .tulip, .sunflower-big{ animation:none !important; }
-    .screen, .press-btn, .opt-btn, .song-item, .phrase-item, .heart-tile, .back-btn{ transition:none !important; }
   }
 </style>
 </head>
@@ -277,7 +217,7 @@
 <div id="screen-fall" class="screen active">
   <div class="fall-container" id="fallContainer"></div>
   <h1>Tengo algo para vos 🌻</h1>
-  <button class="press-btn" onclick="startExperience()">Presioná</button>
+  <button class="press-btn" onclick="goTo('screen-ask')">Presioná</button>
 </div>
 
 <!-- SCREEN 2: te gusto -->
@@ -285,9 +225,9 @@
   <button class="back-btn" onclick="goTo('screen-fall')">← Volver</button>
   <h1>¿Te gustó?</h1>
   <div class="options">
-    <button class="opt-btn opt-1" onclick="goTo('screen-tulips'); startMusicIfNeeded();">Sí</button>
-    <button class="opt-btn opt-2" onclick="goTo('screen-heart'); startMusicIfNeeded();">Súper sí</button>
-    <button class="opt-btn opt-3" onclick="goTo('screen-flower'); startMusicIfNeeded();">¡Eres asombrosa y guapa, mega sí!</button>
+    <button class="opt-btn opt-1" onclick="goTo('screen-tulips')">Sí</button>
+    <button class="opt-btn opt-2" onclick="goTo('screen-heart')">Súper sí</button>
+    <button class="opt-btn opt-3" onclick="goTo('screen-flower')">¡Eres asombrosa y guapa, mega sí!</button>
   </div>
 </div>
 
@@ -302,7 +242,6 @@
     <div class="tulip"><div class="tulip-leaf"></div><div class="tulip-stem"></div><div class="tulip-head"><div class="tulip-petal p1"></div><div class="tulip-petal p2"></div><div class="tulip-petal p3"></div></div></div>
   </div>
   <p class="note">Un ramo para vos, con cariño 💛</p>
-  <audio id="tulipAudio" src="canciones/TWICE What is love ; sub español.mp3" controls preload="auto" style="margin-top:10px;"></audio>
 </div>
 
 <!-- SCREEN 3B: corazon de fotos -->
@@ -328,11 +267,8 @@
     <div class="col">
       <div class="col-title">Nuestra playlist</div>
       <div class="song-list" id="songList"></div>
-      <div class="audio-controls">
-        <button class="audio-toggle" id="muteToggle" onclick="toggleMute()">🔊</button>
-      </div>
       <div class="now-playing" id="nowPlaying"></div>
-      <audio id="playerAudio" preload="auto"></audio>
+      <audio id="playerAudio"></audio>
     </div>
   </div>
 </div>
@@ -341,94 +277,67 @@
 // ---------- navigation ----------
 function goTo(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(id);
-  if(target) target.classList.add('active');
+  document.getElementById(id).classList.add('active');
 }
 
+// ---------- CANCION DE INICIO: suena en todas las pantallas ----------
 const introAudio = new Audio('canciones/TWICE - YES or YES - (Sub Español) MV.mp3');
 introAudio.loop = true;
-introAudio.volume = 0.38;
-
-const playerAudio = document.getElementById('playerAudio');
-playerAudio.volume = 0.8;
-playerAudio.preload = 'auto';
-
-const tulipAudio = document.getElementById('tulipAudio');
-if(tulipAudio){
-  tulipAudio.volume = 0.7;
-}
-
-function startAudio(audio){
-  if (!audio) return Promise.resolve();
-  if (audio.paused) {
-    return audio.play().catch(() => {});
-  }
-  return Promise.resolve();
-}
-
-function startExperience(){
-  goTo('screen-ask');
-  startAudio(introAudio);
-}
-
-function startMusicIfNeeded(){
-  startAudio(introAudio);
-  if(playerAudio && playerAudio.src && playerAudio.src !== window.location.href){
-    playerAudio.volume = 0.8;
-  }
-}
-
-function toggleMute(){
-  const muteBtn = document.getElementById('muteToggle');
-  const muted = !introAudio.muted && !playerAudio.muted && !tulipAudio?.muted;
-  introAudio.muted = muted;
-  playerAudio.muted = muted;
-  if(tulipAudio) tulipAudio.muted = muted;
-  muteBtn.textContent = muted ? '🔇' : '🔊';
-}
+introAudio.play().catch(()=>{});
 
 // ---------- screen 1: falling sunflowers ----------
 function makeSunflowerHTML(size){
   let petals = '';
-  for(let i = 0; i < 10; i++){
-    petals += `<div style="position:absolute;width:${size * 0.16}px;height:${size * 0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size * 0.42}px;transform:rotate(${i * 36}deg);transform-origin:bottom center;"></div>`;
+  for(let i=0;i<10;i++){
+    petals += `<div style="position:absolute;width:${size*0.16}px;height:${size*0.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size*0.42}px;transform-origin:bottom center;transform:rotate(${i*36}deg);"></div>`;
   }
-  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size * 0.36}px;height:${size * 0.36}px;border-radius:50%;background:radial-gradient(circle,#f6d56a,#a8621c);top:${size * 0.32}px;left:${size * 0.32}px;"></div></div>`;
+  return `<div style="position:relative;width:${size}px;height:${size}px;">${petals}<div style="position:absolute;width:${size*0.36}px;height:${size*0.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*0.32}px;left:${size*0.32}px;"></div></div>`;
 }
 
 const fallContainer = document.getElementById('fallContainer');
-const NUM_FLOWERS = 18;
-for(let i = 0; i < NUM_FLOWERS; i++){
+const NUM_FLOWERS = 16;
+for(let i=0;i<NUM_FLOWERS;i++){
   const el = document.createElement('div');
   el.className = 'falling-flower';
-  const size = 22 + Math.random() * 32;
+  const size = 24 + Math.random()*28;
   el.innerHTML = makeSunflowerHTML(size);
-  el.style.left = Math.random() * 100 + 'vw';
-  const fallDuration = 6 + Math.random() * 7;
-  const spinDuration = 3 + Math.random() * 5;
+  el.style.left = Math.random()*100 + 'vw';
+  const fallDuration = 6 + Math.random()*6;
+  const spinDuration = 3 + Math.random()*4;
   el.style.animationDuration = fallDuration + 's, ' + spinDuration + 's';
-  el.style.animationDelay = (-Math.random() * fallDuration) + 's, ' + (-Math.random() * spinDuration) + 's';
+  el.style.animationDelay = (-Math.random()*fallDuration) + 's, ' + (-Math.random()*spinDuration) + 's';
   fallContainer.appendChild(el);
 }
 
 // ---------- screen 3B: photo heart ----------
 const heartMask = [
-  '01010',
-  '11111',
-  '11111',
-  '01110',
-  '00100'
+  "01010",
+  "11111",
+  "11111",
+  "01110",
+  "00100"
 ];
 const heartGrid = document.getElementById('heartGrid');
 const tileSize = 58, gap = 6;
 let cols = heartMask[0].length;
-let totalWidth = cols * (tileSize + gap);
+let totalWidth = cols*(tileSize+gap);
 heartGrid.style.width = totalWidth + 'px';
 
+// FOTOS: foto 1 a foto 13 con sus extensiones reales
 const fotos = [
-  'fotos/foto 1.jpg', 'fotos/foto 2.jpg', 'fotos/foto 3.jpg', 'fotos/foto 4.jpg', 'fotos/foto 5.jpg',
-  'fotos/foto 6.jpg', 'fotos/foto 7.jpg', 'fotos/foto 8.jpg', 'fotos/foto 9.jpg', 'fotos/foto 10.jpg',
-  'fotos/foto 11.jpg', 'fotos/foto 12.jpg', 'fotos/foto 13.jpg'
+  "fotos/foto 1.jpg",
+  "fotos/foto 2.JPEG",
+  "fotos/foto 3.jpeg",
+  "fotos/foto 4.jpeg",
+  "fotos/foto 5.jpeg",
+  "fotos/foto 6.jpeg",
+  "fotos/foto 7.jpeg",
+  "fotos/foto 8.jpeg",
+  "fotos/foto 9.jpeg",
+  "fotos/foto 10.jpeg",
+  "fotos/foto 11.JPEG",
+  "fotos/foto 12.JPEG",
+  "fotos/foto 13.JPEG"
 ];
 
 let idx = 0;
@@ -437,10 +346,10 @@ heartMask.forEach((row, r) => {
     if(cell === '1'){
       const tile = document.createElement('div');
       tile.className = 'heart-tile';
-      tile.style.width = tileSize + 'px';
-      tile.style.height = tileSize + 'px';
-      tile.style.top = (r * (tileSize + gap)) + 'px';
-      tile.style.left = (c * (tileSize + gap)) + 'px';
+      tile.style.width = tileSize+'px';
+      tile.style.height = tileSize+'px';
+      tile.style.top = (r*(tileSize+gap)) + 'px';
+      tile.style.left = (c*(tileSize+gap)) + 'px';
       tile.style.backgroundImage = `url(${fotos[idx]})`;
       tile.style.backgroundSize = 'cover';
       idx++;
@@ -448,38 +357,41 @@ heartMask.forEach((row, r) => {
     }
   });
 });
-heartGrid.style.height = (heartMask.length * (tileSize + gap)) + 'px';
+heartGrid.style.height = (heartMask.length*(tileSize+gap)) + 'px';
 
 // ---------- screen 3C: big rotating sunflower ----------
 document.getElementById('bigSun').innerHTML = (function(){
   let petals = '';
-  for(let i = 0; i < 12; i++){
-    petals += `<div class="petal-big" style="transform:rotate(${i * 30}deg);"></div>`;
+  for(let i=0;i<12;i++){
+    petals += `<div class="petal-big" style="transform:rotate(${i*30}deg);"></div>`;
   }
   return petals + '<div class="flower-center-big"></div>';
 })();
 
 // ---------- screen 3C: phrases + playlist ----------
 const phrases = [
-  'Cada día contigo es mi flor favorita 🌻',
-  'Sos la razón de mi mejor sonrisa',
-  'Con vos hasta lo simple se vuelve especial',
-  'Me encanta girar mi día alrededor tuyo',
-  'Sos mi lugar favorito para volver',
-  'Feliz inicio de primavera, te amo'
+  "Cada día contigo es mi flor favorita 🌻",
+  "Sos la razón de mi mejor sonrisa",
+  "Con vos hasta lo simple se vuelve especial",
+  "Me encanta girar mi día alrededor tuyo",
+  "Sos mi lugar favorito para volver",
+  "Feliz inicio de primavera, te amo"
 ];
+
+// PLAYLIST: nombres EXACTOS de los archivos en canciones/
 const songTitles = [
-  'MILO J, BHAVI - OJALA.mp3',
-  "WINNER - 'MILLIONS' M V.mp3",
- "iKON - (LOVE SCENARIO)' M V.mp3",
-  'TXT-Run Away (Sub. Español).mp3',
-  'Callejeros - 9 de Julio (Letra).mp3',
-  'TWICE - LIKEY -(Sub Español) MV.mp3'
+  "TWICE What is love ; sub español.mp3",
+  "MILO J, BHAVI - OJALA.mp3",
+  "iKON - (LOVE SCENARIO)' M V.mp3",
+  "TXT-Run Away (Sub. Español).mp3",
+  "Callejeros - 9 de Julio (Letra).mp3",
+  "TWICE - LIKEY - (Sub Español) MV.mp3"
 ];
 
 const phraseList = document.getElementById('phraseList');
 const songList = document.getElementById('songList');
 const nowPlaying = document.getElementById('nowPlaying');
+const playerAudio = document.getElementById('playerAudio');
 
 phrases.forEach((text, i) => {
   const item = document.createElement('div');
@@ -512,12 +424,12 @@ songTitles.forEach((title, i) => {
   songList.appendChild(item);
 });
 
+// ---------- PLAYLIST ----------
 function playTrack(i){
   introAudio.pause();
   document.querySelectorAll('.song-item').forEach(s => s.classList.remove('playing'));
   const songEl = document.getElementById('song-' + i);
   if(songEl) songEl.classList.add('playing');
-
   playerAudio.src = 'canciones/' + songTitles[i];
   playerAudio.volume = 0.8;
   playerAudio.play().catch(() => {});
@@ -526,3 +438,4 @@ function playTrack(i){
 </script>
 </body>
 </html>
+
