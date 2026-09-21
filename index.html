@@ -27,7 +27,7 @@
 <script>
 function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
 const fileUrl=(folder,name)=>folder+'/'+encodeURIComponent(name);
-const introAudio=new Audio(fileUrl('canciones/TWICE - YES or YES - (Sub Español) MV.mp3'));introAudio.loop=true;introAudio.play().catch(()=>{});
+const introAudio=new Audio(fileUrl('canciones','TWICE - YES or YES - (Sub Español) MV.mp3'));introAudio.loop=true;introAudio.play().catch(()=>{});
 const fallContainer=document.getElementById('fallContainer');
 function makeSunflowerHTML(size){let p='';for(let i=0;i<10;i++)p+=`<div style="position:absolute;width:${size*.16}px;height:${size*.36}px;background:linear-gradient(180deg,#f5b942,#d99a1f);border-radius:50% 50% 0 0;top:0;left:${size*.42}px;transform-origin:bottom center;transform:rotate(${i*36}deg)"></div>`;return `<div style="position:relative;width:${size}px;height:${size}px">${p}<div style="position:absolute;width:${size*.36}px;height:${size*.36}px;border-radius:50%;background:radial-gradient(circle,#7a4a1e,#4a2c10);top:${size*.32}px;left:${size*.32}px"></div></div>`}
 for(let i=0;i<16;i++){const e=document.createElement('div');e.className='falling-flower';const size=24+Math.random()*28;e.innerHTML=makeSunflowerHTML(size);e.style.left=Math.random()*100+'vw';const f=6+Math.random()*6,s=3+Math.random()*4;e.style.animationDuration=`${f}s,${s}s`;e.style.animationDelay=`${-Math.random()*f}s,${-Math.random()*s}s`;fallContainer.appendChild(e)}
