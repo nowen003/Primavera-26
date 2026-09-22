@@ -1,633 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Primavera 🌻</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --dusk: #3d2b2b;
-        --gold: #f3c86c;
-        --butter: #ffe69a;
-        --peach: #f6d4a2;
-        --rose: #f9c5d5;
-        --pink: #f39bb6;
-        --lavender: #eed9ff;
-        --cream: #fffaf1;
-        --sun: #f7d26b;
-        --ink: #4a2f36;
-      }
-
-      * { box-sizing: border-box; }
-
-      html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        font-family: "Quicksand", sans-serif;
-        color: var(--ink);
-        background: linear-gradient(180deg, #fff7de 0%, #ffe6bb 24%, #ffe8d8 62%, #fffaf1 100%);
-      }
-
-      body {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .screen {
-        position: absolute;
-        inset: 0;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 4rem 1.5rem 2rem;
-      }
-
-      .screen.active {
-        display: flex;
-      }
-
-      .sunflower-decoration {
-        position: absolute;
-        font-size: clamp(2rem, 4vw, 4rem);
-        opacity: 0.8;
-        filter: drop-shadow(0 10px 12px rgba(207, 125, 52, 0.15));
-      }
-
-      .sunflower-decoration.one {
-        top: 8%;
-        left: 8%;
-        transform: rotate(-18deg);
-      }
-
-      .sunflower-decoration.two {
-        right: 8%;
-        bottom: 10%;
-        transform: rotate(16deg);
-      }
-
-      #fallContainer {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-        pointer-events: none;
-      }
-
-      .falling-flower {
-        position: absolute;
-        top: -8%;
-        font-size: clamp(1.1rem, 2vw, 2.1rem);
-        opacity: 0.8;
-        animation: fall linear infinite;
-      }
-
-      @keyframes fall {
-        0% {
-          transform: translate3d(0, -20%, 0) rotate(0deg);
-          opacity: 0;
-        }
-        12% { opacity: 0.8; }
-        100% {
-          transform: translate3d(var(--drift), 110vh, 0) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
-      .burst-flower {
-        position: absolute;
-        font-size: 1.5rem;
-        animation: burst 0.9s ease-out forwards;
-        pointer-events: none;
-      }
-
-      @keyframes burst {
-        0% {
-          opacity: 0;
-          transform: scale(0.5) translateY(0);
-        }
-        20% { opacity: 1; }
-        100% {
-          opacity: 0;
-          transform: scale(1.4) translateY(-22px);
-        }
-      }
-
-      .card {
-        position: relative;
-        width: min(860px, 92vw);
-        padding: clamp(2rem, 6vw, 4rem) clamp(1.4rem, 4vw, 3rem);
-        border-radius: 30px;
-        background: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 25px 50px rgba(120, 79, 49, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.45);
-      }
-
-      h1, h2 {
-        margin: 0;
-        font-family: "Playfair Display", serif;
-        line-height: 1.1;
-      }
-
-      .fall h1,
-      .ask h1,
-      .tulips h2,
-      .heart h2,
-      .music h2 {
-        letter-spacing: 0.02em;
-      }
-
-      .fall h1 {
-        font-size: clamp(2.8rem, 5vw, 5rem);
-        margin-bottom: 1rem;
-      }
-
-      .fall p,
-      .tulips p,
-      .heart p,
-      .music p {
-        font-size: clamp(1rem, 1.7vw, 1.2rem);
-        line-height: 1.6;
-        margin: 0.8rem 0 0;
-      }
-
-      .eyebrow {
-        display: inline-block;
-        margin: 0 0 0.75rem;
-        padding: 0.45rem 0.9rem;
-        border-radius: 999px;
-        background: rgba(255, 230, 154, 0.55);
-        color: var(--dusk);
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        font-size: 0.72rem;
-      }
-
-      .fall .card,
-      .ask .card,
-      .tulips .card,
-      .music .card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .fall .card {
-        padding: clamp(2.3rem, 5vw, 4.5rem) clamp(1.4rem, 4vw, 3rem);
-      }
-
-      .start-btn,
-      .option,
-      .back-btn,
-      .audio-control,
-      .song {
-        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-      }
-
-      .start-btn,
-      .option {
-        padding: 0.95rem 1.5rem;
-        border: none;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #f5d59d, #f6bd8d);
-        color: var(--dusk);
-        font-weight: 700;
-        box-shadow: 0 12px 25px rgba(232, 162, 55, 0.18);
-        cursor: pointer;
-        font-family: inherit;
-        font-size: 1rem;
-      }
-
-      .start-btn:hover,
-      .option:hover,
-      .back-btn:hover,
-      .audio-control:hover,
-      .song:hover {
-        transform: translateY(-2px) scale(1.01);
-      }
-
-      .back-btn,
-      .audio-control {
-        position: absolute;
-        z-index: 5;
-        padding: 0.65rem 1rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.7);
-        color: var(--dusk);
-        box-shadow: 0 8px 20px rgba(44, 27, 61, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.75);
-        font-weight: 700;
-        font-family: inherit;
-        cursor: pointer;
-      }
-
-      .back-btn {
-        top: 1.3rem;
-        left: 1.2rem;
-      }
-
-      .audio-control {
-        right: 1.2rem;
-        bottom: 1.2rem;
-      }
-
-      .options {
-        display: grid;
-        gap: 1rem;
-        width: min(540px, 82vw);
-        margin-top: 1.3rem;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .option {
-        width: 100%;
-      }
-
-      .bouquet-card {
-        gap: 1rem;
-        padding: clamp(2rem, 5vw, 3rem);
-      }
-
-      .bouquet {
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        letter-spacing: 0.2em;
-        filter: drop-shadow(0 12px 20px rgba(170, 104, 30, 0.1));
-      }
-
-      .mini-quote,
-      .phrase-card {
-        background: rgba(255,255,255,0.5);
-        border-radius: 18px;
-        padding: 0.9rem 1rem;
-        border: 1px solid rgba(255,255,255,0.7);
-        box-shadow: 0 8px 18px rgba(106, 68, 53, 0.08);
-      }
-
-      .heart-card {
-        max-height: 86vh;
-        overflow: auto;
-        padding: clamp(1.5rem, 3vw, 2.3rem) clamp(1rem, 2vw, 1.5rem) clamp(1.7rem, 3vw, 2.5rem);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8rem;
-      }
-
-      .heart-card::before {
-        content: "";
-        position: absolute;
-        inset: 10% 14% 14% 14%;
-        background: radial-gradient(circle at center, rgba(245, 179, 179, 0.28), rgba(245, 179, 179, 0.04) 58%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .heart-gallery {
-        position: relative;
-        width: min(540px, 78vw);
-        height: min(540px, 68vh);
-        margin-top: 0.5rem;
-      }
-
-      .photo-slot {
-        position: absolute;
-        width: 18%;
-        aspect-ratio: 1;
-        transform: translate(-50%, -50%);
-        overflow: hidden;
-        border-radius: 22px;
-        background: linear-gradient(135deg, rgba(255, 244, 220, 0.8), rgba(255, 235, 208, 0.8));
-        border: 3px solid rgba(255, 255, 255, 0.7);
-        box-shadow: 0 12px 25px rgba(132, 88, 66, 0.12);
-      }
-
-      .photo-slot img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .photo-slot.missing {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: rgba(94, 70, 72, 0.55);
-        font-size: 1.2rem;
-      }
-
-      .playlist-card {
-        width: min(760px, 92vw);
-        gap: 1rem;
-      }
-
-      .phrase-list {
-        display: grid;
-        gap: 0.85rem;
-        width: min(640px, 80vw);
-      }
-
-      .phrase-card {
-        font-size: 1rem;
-        line-height: 1.5;
-        color: var(--dusk);
-      }
-
-      .playlist {
-        display: grid;
-        gap: 0.9rem;
-        width: min(620px, 80vw);
-      }
-
-      .song {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        width: 100%;
-        padding: 0.85rem 1rem;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.48);
-        border: 1px solid rgba(255,255,255,0.7);
-        box-shadow: 0 10px 18px rgba(117, 89, 71, 0.08);
-        cursor: pointer;
-        color: var(--ink);
-        font: inherit;
-      }
-
-      .song-info {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        text-align: left;
-      }
-
-      .song-ico {
-        font-size: 1.4rem;
-      }
-
-      .song-text {
-        display: grid;
-        gap: 0.15rem;
-      }
-
-      .song-title {
-        font-weight: 700;
-      }
-
-      .song-quote {
-        font-size: 0.78rem;
-        opacity: 0.8;
-      }
-
-      @media (max-width: 700px) {
-        .options {
-          grid-template-columns: 1fr;
-        }
-
-        .playlist,
-        .phrase-list {
-          width: min(620px, 88vw);
-        }
-
-        .heart-gallery {
-          width: min(500px, 86vw);
-          height: min(500px, 60vh);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <section id="screen-fall" class="screen fall active">
-      <div class="sunflower-decoration one">🌻</div>
-      <div class="sunflower-decoration two">🌻</div>
-      <div id="fallContainer"></div>
-      <div class="card">
-        <p class="eyebrow">Primavera en tu corazón</p>
-        <h1>Para vos, mi amor 🌼</h1>
-        <p>Un pequeño mundo de flores, canciones y recuerdos para recordarte cuánto te amo.</p>
-        <button class="start-btn" id="startButton">Abrir mi sorpresa</button>
-      </div>
-    </section>
-
-    <section id="screen-ask" class="screen ask">
-      <button class="back-btn" data-go="screen-fall">← Volver</button>
-      <div class="card">
-        <h1>Elige tu detalle 💛</h1>
-        <div class="options">
-          <button class="option" data-go="screen-tulips">🌻 Ramo</button>
-          <button class="option" data-go="screen-heart">💗 Corazón</button>
-          <button class="option" data-go="screen-music">💌 Frases</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="screen-tulips" class="screen tulips">
-      <button class="back-btn" data-go="screen-ask">← Volver</button>
-      <div class="card bouquet-card">
-        <div class="bouquet">🌻🌷🌸🌷🌻</div>
-        <h2>Para vos, mi primavera favorita 🌼</h2>
-        <p>Te amo más que las flores que abren en primavera, y más que el sol cuando vuelve a aparecer.</p>
-        <div class="mini-quote">“Con vos, cada día tiene más color, más calma y más amor.”</div>
-      </div>
-    </section>
-
-    <section id="screen-heart" class="screen heart">
-      <button class="back-btn" data-go="screen-ask">← Volver</button>
-      <div class="card heart-card">
-        <h2>16 momentos en mi corazón 💗</h2>
-        <p>Los mejores recuerdos, cada uno lleno de vos.</p>
-        <div id="heartGallery" class="heart-gallery"></div>
-      </div>
-    </section>
-
-    <section id="screen-music" class="screen music">
-      <button class="back-btn" data-go="screen-ask">← Volver</button>
-      <div class="card playlist-card">
-        <h2>Frases lindas para vos 💌</h2>
-        <div class="phrase-list">
-          <div class="phrase-card">“Cada vez que me mirás, siento que el mundo se vuelve más bonito.”</div>
-          <div class="phrase-card">“No necesito explicar lo que siento cuando vos ya lo entendés con una mirada.”</div>
-          <div class="phrase-card">“Te quiero en cada estación, pero en primavera me dan ganas de decirte que te amo más que nunca.”</div>
-          <div class="phrase-card">“Con vos, los días se vuelven más luz, más calma y más magia.”</div>
-        </div>
-        <div id="playlist" class="playlist"></div>
-      </div>
-    </section>
-
-    <button id="audioToggle" class="audio-control" hidden>🔊 Música</button>
-    <audio id="backgroundAudio" loop preload="auto"></audio>
-
-    <script>
-      const assetUrl = (folder, name) => folder + '/' + encodeURIComponent(name);
-      const yesSong = 'TWICE - YES or YES - (Sub Español) MV.mp3';
-      const loveSong = 'TWICE What is love ; sub español.mp3';
-
-      const songs = [
-        { file: yesSong, title: 'TWICE — YES or YES', icon: '✨', quote: 'Nuestra historia se siente como un verano eterno.' },
-        { file: loveSong, title: 'TWICE — What Is Love', icon: '💖', quote: 'Porque vos sos mi canción favorita.' },
-        { file: 'TWICE - LIKEY - (Sub Español) MV.mp3', title: 'TWICE — LIKEY', icon: '🌼', quote: 'Con vos, cada momento se vuelve más hermoso.' },
-        { file: 'TXT-Run Away (Sub. Español).mp3', title: 'TXT — Run Away', icon: '🌷', quote: 'Y aun así, siempre quiero volver a tu lado.' }
-      ];
-
-      const audio = document.getElementById('backgroundAudio');
-      const audioToggle = document.getElementById('audioToggle');
-      let currentSong = '';
-
-      function updateAudioButton() {
-        audioToggle.hidden = false;
-        audioToggle.textContent = audio.paused ? '▶ Música' : '🔊 Música';
-      }
-
-      async function setSong(song) {
-        const file = typeof song === 'string' ? song : song.file;
-        if (currentSong === file && !audio.paused) return;
-
-        audio.pause();
-        audio.currentTime = 0;
-        currentSong = file;
-        audio.src = assetUrl('canciones', file);
-
-        try {
-          await audio.play();
-        } catch (error) {
-          console.log('Audio bloqueado hasta la interacción del usuario');
-        }
-
-        updateAudioButton();
-      }
-
-      async function goTo(id) {
-        document.querySelectorAll('.screen').forEach((screen) => screen.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-
-        if (['screen-tulips', 'screen-heart', 'screen-music'].includes(id)) {
-          await setSong(yesSong);
-        }
-
-        if (id === 'screen-fall') {
-          audio.pause();
-          updateAudioButton();
-        }
-      }
-
-      document.querySelectorAll('[data-go]').forEach((button) => {
-        button.addEventListener('click', () => goTo(button.dataset.go));
-      });
-
-      document.getElementById('startButton').addEventListener('click', () => goTo('screen-ask'));
-
-      audioToggle.addEventListener('click', async () => {
-        if (audio.paused) {
-          if (!currentSong) {
-            await setSong(yesSong);
-          } else {
-            await audio.play().catch(() => {});
-          }
-        } else {
-          audio.pause();
-        }
-        updateAudioButton();
-      });
-
-      const playlist = document.getElementById('playlist');
-      songs.forEach((song) => {
-        const row = document.createElement('button');
-        row.type = 'button';
-        row.className = 'song';
-        row.innerHTML = `
-          <div class="song-info">
-            <span class="song-ico">${song.icon}</span>
-            <div class="song-text">
-              <span class="song-title">${song.title}</span>
-              <span class="song-quote">${song.quote}</span>
-            </div>
-          </div>
-          <span>▶</span>
-        `;
-        row.addEventListener('click', async () => {
-          await setSong(song);
-        });
-        playlist.appendChild(row);
-      });
-
-      const photoNames = [
-        'foto 1.jpg', 'foto 2.JPEG', 'foto 3.jpeg', 'foto 4.jpeg',
-        'foto 5.jpeg', 'foto 6.jpeg', 'foto 7.jpeg', 'foto 8.jpeg',
-        'foto 9.jpeg', 'foto 10.jpeg', 'foto 11.JPEG', 'foto 12.JPEG',
-        'foto 13.JPEG', 'foto 14.PNG', 'foto 15.PNG', 'foto 16.JPEG'
-      ];
-
-      const heartLayout = [
-        [50, 20], [36, 24], [64, 24], [23, 38], [77, 38], [17, 58], [83, 58],
-        [32, 49], [68, 49], [23, 72], [77, 72], [36, 68], [64, 68], [50, 78], [50, 56], [50, 40]
-      ];
-
-      const gallery = document.getElementById('heartGallery');
-      photoNames.forEach((name, index) => {
-        const slot = document.createElement('div');
-        slot.className = 'photo-slot';
-        const [x, y] = heartLayout[index];
-        slot.style.left = x + '%';
-        slot.style.top = y + '%';
-
-        const img = document.createElement('img');
-        img.src = assetUrl('fotos', name);
-        img.alt = 'Foto ' + (index + 1);
-        img.loading = 'lazy';
-        img.onerror = () => {
-          slot.classList.add('missing');
-          slot.innerHTML = '💛';
-        };
-
-        slot.appendChild(img);
-        gallery.appendChild(slot);
-      });
-
-      const fallContainer = document.getElementById('fallContainer');
-      const flowerSymbols = ['🌻', '🌷', '🌸', '🌼'];
-
-      for (let i = 0; i < 18; i++) {
-        const flower = document.createElement('div');
-        flower.className = 'falling-flower';
-        flower.textContent = flowerSymbols[i % flowerSymbols.length];
-        flower.style.left = (Math.random() * 100) + '%';
-        flower.style.animationDuration = (9 + Math.random() * 7) + 's';
-        flower.style.animationDelay = (Math.random() * -10) + 's';
-        flower.style.setProperty('--drift', (Math.random() * 130 - 65) + 'px');
-        fallContainer.appendChild(flower);
-      }
-
-      function sunflowerBurst(x, y) {
-        for (let i = 0; i < 8; i++) {
-          const burst = document.createElement('span');
-          burst.className = 'burst-flower';
-          burst.textContent = flowerSymbols[i % flowerSymbols.length];
-          burst.style.left = x + 'px';
-          burst.style.top = y + 'px';
-          burst.style.animationDelay = (i * 0.06) + 's';
-          burst.style.transform = 'translate(-50%, -50%)';
-          document.body.appendChild(burst);
-          setTimeout(() => burst.remove(), 1000);
-        }
-      }
-
-      document.addEventListener('click', (event) => {
-        const clicked = event.target.closest('.start-btn, .option, .back-btn, .audio-control, .song');
-        if (!clicked) {
-          sunflowerBurst(Math.random() * (window.innerWidth - 60), Math.random() * (window.innerHeight * 0.7));
-        }
-      });
-
-      updateAudioButton();
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Primavera 🌻</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --dusk:#3d2b2b; --ink:#4a2f36; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; width:100%; height:100%; overflow:hidden; font-family:Quicksand,sans-serif; color:var(--ink); background:linear-gradient(180deg,#fff7de 0%,#ffe6bb 24%,#ffe8d8 62%,#fffaf1 100%); }
+    body { position:relative; display:flex; align-items:center; justify-content:center; }
+    .screen { position:absolute; inset:0; display:none; align-items:center; justify-content:center; padding:4rem 1.5rem 2rem; }
+    .screen.active { display:flex; }
+    .sunflower-decoration { position:absolute; font-size:clamp(2rem,4vw,4rem); opacity:.8; filter:drop-shadow(0 10px 12px rgba(207,125,52,.15)); }
+    .sunflower-decoration.one { top:8%; left:8%; transform:rotate(-18deg); }
+    .sunflower-decoration.two { right:8%; bottom:10%; transform:rotate(16deg); }
+    #fallContainer { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .falling-flower { position:absolute; top:-8%; font-size:clamp(1.1rem,2vw,2.1rem); opacity:.8; animation:fall linear infinite; }
+    @keyframes fall { 0%{transform:translate3d(0,-20%,0) rotate(0);opacity:0} 12%{opacity:.8} 100%{transform:translate3d(var(--drift),110vh,0) rotate(360deg);opacity:0} }
+    .burst-flower { position:absolute; font-size:1.5rem; animation:burst .9s ease-out forwards; pointer-events:none; }
+    @keyframes burst { 0%{opacity:0;transform:scale(.5) translateY(0)} 20%{opacity:1} 100%{opacity:0;transform:scale(1.4) translateY(-22px)} }
+    .card { position:relative; width:min(860px,92vw); padding:clamp(2rem,6vw,4rem) clamp(1.4rem,4vw,3rem); border-radius:30px; background:rgba(255,255,255,.45); backdrop-filter:blur(10px); box-shadow:0 25px 50px rgba(120,79,49,.12); border:1px solid rgba(255,255,255,.45); }
+    h1,h2 { margin:0; font-family:"Playfair Display",serif; line-height:1.1; letter-spacing:.02em; }
+    .fall h1 { font-size:clamp(2.8rem,5vw,5rem); margin-bottom:1rem; }
+    .fall p,.tulips p,.heart p,.music p { font-size:clamp(1rem,1.7vw,1.2rem); line-height:1.6; margin:.8rem 0 0; }
+    .eyebrow { display:inline-block; margin:0 0 .75rem; padding:.45rem .9rem; border-radius:999px; background:rgba(255,230,154,.55); color:var(--dusk); font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:.72rem; }
+    .fall .card,.ask .card,.tulips .card,.music .card { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+    .fall .card { padding:clamp(2.3rem,5vw,4.5rem) clamp(1.4rem,4vw,3rem); }
+    .start-btn,.option,.back-btn,.audio-control,.song { transition:transform .18s ease,box-shadow .18s ease,background .18s ease; }
+    .start-btn,.option { padding:.95rem 1.5rem; border:0; border-radius:999px; background:linear-gradient(135deg,#f5d59d,#f6bd8d); color:var(--dusk); font-weight:700; box-shadow:0 12px 25px rgba(232,162,55,.18); cursor:pointer; font-family:inherit; font-size:1rem; }
+    .start-btn:hover,.option:hover,.back-btn:hover,.audio-control:hover,.song:hover { transform:translateY(-2px) scale(1.01); }
+    .back-btn,.audio-control { position:absolute; z-index:5; padding:.65rem 1rem; border-radius:999px; background:rgba(255,255,255,.7); color:var(--dusk); box-shadow:0 8px 20px rgba(44,27,61,.1); border:1px solid rgba(255,255,255,.75); font-weight:700; font-family:inherit; cursor:pointer; }
+    .back-btn { top:1.3rem; left:1.2rem; }
+    .audio-control { right:1.2rem; bottom:1.2rem; }
+    .options { display:grid; gap:1rem; width:min(700px,86vw); margin-top:1.3rem; grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .option { width:100%; min-height:3.5rem; }
+    .bouquet-card { display:flex; flex-direction:column; align-items:center; text-align:center; gap:1rem; padding:clamp(2rem,5vw,3rem); }
+    .bouquet { font-size:clamp(2.5rem,6vw,4rem); letter-spacing:.2em; filter:drop-shadow(0 12px 20px rgba(170,104,30,.1)); }
+    .mini-quote,.phrase-card { background:rgba(255,255,255,.5); border-radius:18px; padding:.9rem 1rem; border:1px solid rgba(255,255,255,.7); box-shadow:0 8px 18px rgba(106,68,53,.08); }
+    .heart-card { max-height:86vh; overflow:auto; padding:clamp(1.5rem,3vw,2.3rem) clamp(1rem,2vw,1.5rem) clamp(1.7rem,3vw,2.5rem); display:flex; flex-direction:column; align-items:center; gap:.8rem; }
+    .heart-gallery { position:relative; width:min(540px,78vw); height:min(540px,68vh); margin-top:.5rem; }
+    .photo-slot { position:absolute; width:18%; aspect-ratio:1; transform:translate(-50%,-50%); overflow:hidden; border-radius:22px; background:linear-gradient(135deg,rgba(255,244,220,.8),rgba(255,235,208,.8)); border:3px solid rgba(255,255,255,.7); box-shadow:0 12px 25px rgba(132,88,66,.12); }
+    .photo-slot img { width:100%; height:100%; object-fit:cover; display:block; }
+    .photo-slot.missing { display:flex; align-items:center; justify-content:center; color:rgba(94,70,72,.55); font-size:1.2rem; }
+    .playlist-card { width:min(760px,92vw); gap:1rem; max-height:88vh; overflow:auto; }
+    .phrase-list,.playlist { display:grid; gap:.85rem; width:min(640px,80vw); }
+    .phrase-card { font-size:1rem; line-height:1.5; color:var(--dusk); }
+    .song { display:flex; align-items:center; justify-content:space-between; gap:1rem; width:100%; padding:.85rem 1rem; border-radius:18px; background:rgba(255,255,255,.48); border:1px solid rgba(255,255,255,.7); box-shadow:0 10px 18px rgba(117,89,71,.08); cursor:pointer; color:var(--ink); font:inherit; text-align:left; }
+    .song-info { display:flex; align-items:center; gap:.8rem; }
+    .song-ico { font-size:1.4rem; }
+    .song-text { display:grid; gap:.15rem; }
+    .song-title { font-weight:700; }
+    .song-quote { font-size:.78rem; opacity:.8; }
+    @media (max-width:700px) { .options{grid-template-columns:1fr} .playlist,.phrase-list{width:min(620px,88vw)} .heart-gallery{width:min(500px,86vw);height:min(500px,60vh)} }
+  </style>
+</head>
+<body>
+  <section id="screen-fall" class="screen fall active"><div class="sunflower-decoration one">🌻</div><div class="sunflower-decoration two">🌻</div><div id="fallContainer"></div><div class="card"><p class="eyebrow">Primavera en tu corazón</p><h1>Para vos, mi amor 🌼</h1><p>Un pequeño mundo de flores, canciones y recuerdos para recordarte cuánto te amo.</p><button class="start-btn" id="startButton">Abrir mi sorpresa</button></div></section>
+  <section id="screen-ask" class="screen ask"><button class="back-btn" data-go="screen-fall">← Volver</button><div class="card"><h1>¿Te gustó, linda? 💛</h1><div class="options"><button class="option" data-go="screen-tulips">Sí 🌻</button><button class="option" data-go="screen-heart">Súper sí 💗</button><button class="option" data-go="screen-music">Súper sí lindo, eres el más precioso del mundo 💌</button></div></div></section>
+  <section id="screen-tulips" class="screen tulips"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card bouquet-card"><div class="bouquet">🌻🌷🌸🌷🌻</div><h2>Para vos, mi primavera favorita 🌼</h2><p>Te amo más que las flores que abren en primavera, y más que el sol cuando vuelve a aparecer.</p><div class="mini-quote">“Con vos, cada día tiene más color, más calma y más amor.”</div></div></section>
+  <section id="screen-heart" class="screen heart"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card heart-card"><h2>16 momentos en mi corazón 💗</h2><p>Los mejores recuerdos, cada uno lleno de vos.</p><div id="heartGallery" class="heart-gallery"></div></div></section>
+  <section id="screen-music" class="screen music"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card playlist-card"><h2>Frases lindas para vos 💌</h2><div class="phrase-list"><div class="phrase-card">“Cada vez que me mirás, siento que el mundo se vuelve más bonito.”</div><div class="phrase-card">“No necesito explicar lo que siento cuando vos ya lo entendés con una mirada.”</div><div class="phrase-card">“Te quiero en cada estación, pero en primavera me dan ganas de decirte que te amo más que nunca.”</div><div class="phrase-card">“Con vos, los días se vuelven más luz, más calma y más magia.”</div></div><div id="playlist" class="playlist"></div></div></section>
+  <button id="audioToggle" class="audio-control" hidden>🔊 Música</button><audio id="backgroundAudio" loop preload="auto"></audio>
+  <script>
+    const assetUrl=(folder,name)=>folder+'/'+encodeURIComponent(name);
+    const yesSong='TWICE - YES or YES - (Sub Español) MV.mp3';
+    const songs=[
+      {file:yesSong,title:'TWICE — YES or YES',icon:'✨',quote:'Si pudiera elegir otra vez, te elegiría a vos.'},
+      {file:'TWICE What is love ; sub español.mp3',title:'TWICE — What Is Love',icon:'💖',quote:'Porque vos sos mi canción favorita y mi amor más bonito.'},
+      {file:'TWICE - LIKEY - (Sub Español) MV.mp3',title:'TWICE — LIKEY',icon:'🌼',quote:'Con vos, cada momento se vuelve más hermoso.'},
+      {file:'TXT-Run Away (Sub. Español).mp3',title:'TXT — Run Away',icon:'🌷',quote:'Aunque recorramos el mundo, siempre quiero volver a tu lado.'},
+      {file:'Callejeros - 9 de Julio (Letra).mp3',title:'Callejeros — 9 de Julio',icon:'🎸',quote:'En cada lugar y en cada recuerdo, siempre estás vos.'},
+      {file:'MILO J, BHAVI - OJALA.mp3',title:'MILO J, BHAVI — OJALA',icon:'🌙',quote:'Ojalá pudiera abrazarte cada vez que te extraño.'},
+      {file:"WINNER - 'MILLIONS' M V.mp3",title:"WINNER — MILLIONS",icon:'🌟',quote:'Entre millones de personas, tuve la suerte de encontrarte.'},
+      {file:"iKON - (LOVE SCENARIO)’ M V.mp3",title:'iKON — LOVE SCENARIO',icon:'🎶',quote:'Nuestra historia es mi escenario favorito.'},
+      {file:'iKON - ‘사랑을 했다(LOVE SCENARIO)’ M V.mp3',title:'iKON — 사랑을 했다 (LOVE SCENARIO)',icon:'💞',quote:'Todo lo que vivimos juntos queda para siempre en mi corazón.'}
+    ];
+    const audio=document.getElementById('backgroundAudio'), audioToggle=document.getElementById('audioToggle'); let currentSong='';
+    function updateAudioButton(){audioToggle.hidden=false;audioToggle.textContent=audio.paused?'▶ Música':'🔊 Música';}
+    async function setSong(song){const file=typeof song==='string'?song:song.file;if(currentSong===file&&!audio.paused)return;audio.pause();audio.currentTime=0;currentSong=file;audio.src=assetUrl('canciones',file);try{await audio.play()}catch(error){console.log('Audio bloqueado hasta la interacción del usuario')}updateAudioButton()}
+    async function goTo(id){document.querySelectorAll('.screen').forEach(screen=>screen.classList.remove('active'));document.getElementById(id).classList.add('active');if(['screen-tulips','screen-heart','screen-music'].includes(id))await setSong(yesSong);if(id==='screen-fall'){audio.pause();updateAudioButton()}}
+    document.querySelectorAll('[data-go]').forEach(button=>button.addEventListener('click',()=>goTo(button.dataset.go)));
+    document.getElementById('startButton').addEventListener('click',()=>goTo('screen-ask'));
+    audioToggle.addEventListener('click',async()=>{if(audio.paused){if(!currentSong)await setSong(yesSong);else await audio.play().catch(()=>{})}else audio.pause();updateAudioButton()});
+    const playlist=document.getElementById('playlist');
+    songs.forEach(song=>{const row=document.createElement('button');row.type='button';row.className='song';row.innerHTML=`<div class="song-info"><span class="song-ico">${song.icon}</span><div class="song-text"><span class="song-title">${song.title}</span><span class="song-quote">${song.quote}</span></div></div><span>▶</span>`;row.addEventListener('click',async()=>await setSong(song));playlist.appendChild(row)});
+    const photoNames=['foto 1.jpg','foto 2.JPEG','foto 3.jpeg','foto 4.jpeg','foto 5.jpeg','foto 6.jpeg','foto 7.jpeg','foto 8.jpeg','foto 9.jpeg','foto 10.jpeg','foto 11.JPEG','foto 12.JPEG','foto 13.JPEG','foto 14.PNG','foto 15.PNG','foto 16.JPEG'];
+    const heartLayout=[[50,20],[36,24],[64,24],[23,38],[77,38],[17,58],[83,58],[32,49],[68,49],[23,72],[77,72],[36,68],[64,68],[50,78],[50,56],[50,40]],gallery=document.getElementById('heartGallery');
+    photoNames.forEach((name,index)=>{const slot=document.createElement('div');slot.className='photo-slot';const [x,y]=heartLayout[index];slot.style.left=x+'%';slot.style.top=y+'%';const img=document.createElement('img');img.src=assetUrl('fotos',name);img.alt='Foto '+(index+1);img.loading='lazy';img.onerror=()=>{slot.classList.add('missing');slot.innerHTML='💛'};slot.appendChild(img);gallery.appendChild(slot)});
+    const fallContainer=document.getElementById('fallContainer'),flowerSymbols=['🌻','🌷','🌸','🌼'];
+    for(let i=0;i<18;i++){const flower=document.createElement('div');flower.className='falling-flower';flower.textContent=flowerSymbols[i%flowerSymbols.length];flower.style.left=Math.random()*100+'%';flower.style.animationDuration=9+Math.random()*7+'s';flower.style.animationDelay=Math.random()*-10+'s';flower.style.setProperty('--drift',Math.random()*130-65+'px');fallContainer.appendChild(flower)}
+    function sunflowerBurst(x,y){for(let i=0;i<8;i++){const burst=document.createElement('span');burst.className='burst-flower';burst.textContent=flowerSymbols[i%flowerSymbols.length];burst.style.left=x+'px';burst.style.top=y+'px';burst.style.animationDelay=i*.06+'s';burst.style.transform='translate(-50%,-50%)';document.body.appendChild(burst);setTimeout(()=>burst.remove(),1000)}}
+    document.addEventListener('click',event=>{const clicked=event.target.closest('.start-btn,.option,.back-btn,.audio-control,.song');if(!clicked)sunflowerBurst(Math.random()*(window.innerWidth-60),Math.random()*(window.innerHeight*.7))});
+    updateAudioButton();
+  </script>
+</body>
 </html>
