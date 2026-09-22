@@ -8,206 +8,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--dusk:#2c1b3d;--yellow:#f5b942;--pink:#e8547c;--ink:#2c1b3d;--peach:#fff0f5;--rose:#ff8eb2;--cream:#fffaf7}
-    *{box-sizing:border-box}
-    html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Quicksand,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff7ea,#ffe6f1 45%,#fffdf9)}
-    body{position:relative;display:flex;align-items:center;justify-content:center}
-    .screen{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:4rem 1.5rem 2rem;text-align:center}
-    .screen.active{display:flex}
-    .fall{background:radial-gradient(circle at top,rgba(255,255,255,.85),rgba(255,237,203,.92) 35%,rgba(248,201,213,.8))}
-    .sunflower-decoration{position:absolute;font-size:clamp(2rem,4vw,4rem);opacity:.75}.sunflower-decoration.one{top:8%;left:8%;transform:rotate(-18deg)}.sunflower-decoration.two{right:8%;bottom:10%;transform:rotate(16deg)}
-    #fallContainer{position:absolute;inset:0;pointer-events:none}.falling-flower{position:absolute;top:-10%;animation:fall linear forwards;opacity:.9}@keyframes fall{0%{transform:translateY(-10%) rotate(0deg)}100%{transform:translateY(115vh) rotate(180deg)}}
+    :root{--dusk:#2c1b3d;--pink:#e8547c;--ink:#2c1b3d}
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Quicksand,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff7ea,#ffe6f1 45%,#fffdf9)}
+    body{position:relative;display:flex;align-items:center;justify-content:center}.screen{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:4rem 1.5rem 2rem;text-align:center}.screen.active{display:flex}.fall{background:radial-gradient(circle at top,rgba(255,255,255,.85),rgba(255,237,203,.92) 35%,rgba(248,201,213,.8))}
+    .sunflower-decoration{position:absolute;font-size:clamp(2rem,4vw,4rem);opacity:.75}.one{top:8%;left:8%;transform:rotate(-18deg)}.two{right:8%;bottom:10%;transform:rotate(16deg)}#fallContainer{position:absolute;inset:0;pointer-events:none}.falling-flower{position:absolute;top:-10%;animation:fall linear forwards}@keyframes fall{0%{transform:translateY(-10%) rotate(0)}100%{transform:translateY(115vh) rotate(180deg)}}
     .burst-flower{position:absolute;font-size:1.5rem;animation:burst .8s ease-out forwards;pointer-events:none}@keyframes burst{0%{opacity:0;transform:scale(.5)}20%{opacity:1}100%{opacity:0;transform:scale(1.35) translateY(-18px)}}
-    .card{position:relative;width:min(860px,92vw);padding:clamp(2rem,6vw,4rem) clamp(1.4rem,4vw,3rem);border-radius:30px;background:rgba(255,255,255,.48);backdrop-filter:blur(10px);box-shadow:0 20px 50px rgba(86,62,94,.15);border:1px solid rgba(255,255,255,.6)}
-    h1,h2{margin:0;font-family:'Playfair Display',serif;line-height:1.1}.fall h1{font-size:clamp(2.5rem,5vw,5rem);color:var(--dusk);margin-bottom:1rem}.fall p,.tulips p,.heart p,.music p{font-size:clamp(1rem,1.7vw,1.45rem);line-height:1.7}
-    button{border:0;cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s}button:hover{transform:translateY(-2px) scale(1.01)}
-    .primary-btn{padding:1rem 1.8rem;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 10px 20px rgba(232,84,124,.3)}
-    .back-btn,.audio-control{position:absolute;z-index:5;padding:.65rem 1rem;border-radius:999px;background:rgba(255,255,255,.8);color:var(--dusk);box-shadow:0 5px 15px rgba(44,27,61,.1)}.back-btn{top:1.2rem;left:1.2rem}
-    .audio-control{top:1.2rem;right:1.2rem}
-    .ask h1{font-size:clamp(2.2rem,5vw,4rem);margin-bottom:1.5rem}.options{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:1.1rem;width:min(760px,90vw)}.opt-btn{min-height:150px;padding:1.1rem;border-radius:24px;background:linear-gradient(135deg,#fff7fb,#ffe7ef);border:2px solid rgba(232,84,124,.18);color:var(--dusk);font-size:clamp(1.25rem,2vw,1.8rem);font-weight:700;box-shadow:0 14px 28px rgba(255,128,160,.13);display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2}
-    .opt-btn:nth-child(1){background:linear-gradient(135deg,#fff8e8,#ffeae8)}
-    .opt-btn:nth-child(2){background:linear-gradient(135deg,#fff4fa,#ffe2ee)}
-    .opt-btn:nth-child(3){background:linear-gradient(135deg,#fef5ff,#fbe7ff)}
-    h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;color:var(--dusk)}.bouquet{font-size:clamp(3rem,7vw,7rem);margin-bottom:1rem;animation:sway 2.9s ease-in-out infinite alternate}@keyframes sway{0%{transform:rotate(-5deg) translateY(0)}100%{transform:rotate(5deg) translateY(-8px)}}
-    .heart-wrap{display:grid;place-items:center;margin:1rem auto 0;width:min(620px,82vw);aspect-ratio:1;position:relative;animation:heartbeat 2.8s ease-in-out infinite;filter:drop-shadow(0 18px 35px rgba(233,95,146,.25))}
-    .heart-wrap::before{content:"";position:absolute;inset:6% 8% 10% 8%;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.98),rgba(255,233,242,.9) 32%,rgba(255,200,220,.75) 100%);clip-path:polygon(50% 100%, 8% 58%, 0 32%, 12% 10%, 35% 2%, 50% 18%, 65% 2%, 88% 10%, 100% 32%, 92% 58%);opacity:.8}
-    .photo-heart{position:relative;width:100%;height:100%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:8px;padding:1.1rem;background:linear-gradient(145deg,#fff,#ffdfe9);clip-path:polygon(50% 100%, 8% 58%, 0 32%, 12% 10%, 35% 2%, 50% 18%, 65% 2%, 88% 10%, 100% 32%, 92% 58%);overflow:hidden;border:4px solid rgba(255,255,255,.9);box-shadow:inset 0 0 0 3px rgba(255,188,211,.75)}
-    .photo{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover;border:3px solid rgba(255,255,255,.9);border-radius:15px;box-shadow:0 5px 12px rgba(44,27,61,.12);transition:transform .3s,filter .3s;filter:saturate(1.08) contrast(1.03)}.photo:hover{transform:scale(1.04)}
-    @keyframes heartbeat{0%,100%{transform:scale(1)}45%{transform:scale(1.03)}55%{transform:scale(1.06)}65%{transform:scale(1.025)}}
-    .music-list{width:min(640px,90vw);margin-top:1.5rem;display:grid;gap:.75rem;text-align:left;max-height:48vh;overflow:auto}.song{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.8rem 1rem;border-radius:16px;background:rgba(255,255,255,.5);box-shadow:0 8px 22px rgba(44,27,61,.06)}.song-info{display:flex;align-items:center;gap:.7rem}.song-icon{font-size:1.3rem}.song-text strong{font-size:1.1rem;display:block}.song-text span{font-size:.86rem;color:rgba(44,27,61,.7)}.song-quote{font-style:italic;color:rgba(44,27,61,.7);font-size:.85rem;max-width:260px;text-align:right}
-    @media(max-width:650px){.options{grid-template-columns:1fr}.opt-btn{min-height:95px}.screen{padding:3.5rem 1.2rem 1.5rem}.heart-wrap{width:min(360px,86vw)}.photo-heart{gap:4px;padding:.7rem}.photo{border-radius:10px}.song{flex-direction:column;align-items:flex-start}.song-quote{text-align:left;max-width:100%}}
-    @media(prefers-reduced-motion:reduce){.heart-wrap,.bouquet{animation:none}}
+    .card{position:relative;width:min(860px,92vw);padding:clamp(2rem,6vw,4rem) clamp(1.4rem,4vw,3rem);border-radius:30px;background:rgba(255,255,255,.48);backdrop-filter:blur(10px);box-shadow:0 20px 50px rgba(44,27,61,.15);border:1px solid rgba(255,255,255,.6)}
+    h1,h2{margin:0;font-family:'Playfair Display',serif;line-height:1.1}.fall h1{font-size:clamp(2.5rem,5vw,5rem);margin-bottom:1rem}.fall p,.tulips p,.heart p,.music p{font-size:clamp(1rem,1.7vw,1.4rem);line-height:1.7}button{border:0;cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s}button:hover{transform:translateY(-2px) scale(1.01)}.primary-btn{padding:1rem 1.8rem;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 10px 20px rgba(232,84,124,.3)}
+    .back-btn,.audio-control{position:absolute;z-index:5;padding:.65rem 1rem;border-radius:999px;background:rgba(255,255,255,.8);color:var(--dusk);box-shadow:0 5px 15px rgba(44,27,61,.1)}.back-btn{top:1.2rem;left:1.2rem}.audio-control{top:1.2rem;right:1.2rem}.ask h1{font-size:clamp(2.2rem,5vw,4rem);margin-bottom:1.5rem}.options{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:1.1rem;width:min(760px,90vw)}.opt-btn{min-height:150px;padding:1.1rem;border-radius:24px;background:linear-gradient(135deg,#fff8e8,#ffeae8);border:2px solid rgba(232,84,124,.18);color:var(--dusk);font-size:clamp(1.1rem,2vw,1.8rem);font-weight:700}.opt-btn:nth-child(2){background:linear-gradient(135deg,#fff4fa,#ffe2ee)}.opt-btn:nth-child(3){background:linear-gradient(135deg,#fef5ff,#fbe7ff)}h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}.bouquet{font-size:clamp(3rem,7vw,7rem);margin-bottom:1rem;animation:sway 2.9s ease-in-out infinite alternate}@keyframes sway{0%{transform:rotate(-5deg)}100%{transform:rotate(5deg) translateY(-8px)}}
+    .heart-wrap{display:grid;place-items:center;margin:1rem auto 0;width:min(620px,82vw);aspect-ratio:1;position:relative;animation:heartbeat 2.8s ease-in-out infinite}.photo-heart{position:relative;width:100%;height:100%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:8px;padding:1.1rem;background:linear-gradient(145deg,#fff,#ffdfe9);clip-path:polygon(50% 100%,8% 58%,0 32%,12% 10%,35% 2%,50% 18%,65% 2%,88% 10%,100% 32%,92% 58%)}.photo{width:100%;height:100%;object-fit:cover;border:3px solid rgba(255,255,255,.9);border-radius:15px}.music-list{width:min(640px,90vw);margin-top:1.5rem;display:grid;gap:.75rem;text-align:left;max-height:48vh;overflow:auto}.song{padding:.8rem 1rem;border-radius:16px;background:rgba(255,255,255,.5)}.song-info{display:flex;align-items:center;gap:.7rem}.song-icon{font-size:1.3rem}.song-text strong{display:block}.song-text span{font-size:.86rem;opacity:.7}.song-quote{font-style:italic;opacity:.7;font-size:.85rem;text-align:right}@keyframes heartbeat{0%,100%{transform:scale(1)}45%{transform:scale(1.03)}55%{transform:scale(1.06)}65%{transform:scale(1.025)}}@media(max-width:650px){.options{grid-template-columns:1fr}.opt-btn{min-height:95px}.screen{padding:3.5rem 1.2rem 1.5rem}.heart-wrap{width:min(360px,86vw)}.photo-heart{gap:4px;padding:.7rem}.song{display:flex;flex-direction:column;align-items:flex-start}.song-quote{text-align:left}}
   </style>
 </head>
 <body>
-  <section id="screen-fall" class="screen fall active">
-    <div class="sunflower-decoration one">🌻</div>
-    <div class="sunflower-decoration two">🌻</div>
-    <div id="fallContainer"></div>
-    <div class="card">
-      <h1>Primavera 🌻</h1>
-      <p>Para vos, mi amor, con cada detalle te quiero decir que te amo muchísimo.</p>
-      <button id="startButton" class="primary-btn">Entrar</button>
-    </div>
-  </section>
-
-  <section id="screen-ask" class="screen ask">
-    <button class="back-btn" data-go="screen-fall">← Volver</button>
-    <div class="card">
-      <h1>Elige tu detalle 💛</h1>
-      <div class="options">
-        <button class="opt-btn" data-go="screen-tulips">Sí, súper sí 💖</button>
-        <button class="opt-btn" data-go="screen-heart">Sí, guapo, precioso, te amo 💗</button>
-        <button class="opt-btn" data-go="screen-music">Sí, mi amor, te amo 💞</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="screen-tulips" class="screen tulips">
-    <button class="back-btn" data-go="screen-ask">← Volver</button>
-    <div class="card">
-      <div class="bouquet">🌻🌻🌻</div>
-      <h2>Un ramo para vos 🌻</h2>
-      <p>Porque cada día contigo florece algo más bonito en mi vida.</p>
-    </div>
-  </section>
-
-  <section id="screen-heart" class="screen heart">
-    <button class="back-btn" data-go="screen-ask">← Volver</button>
-    <div class="card">
-      <h2>16 momentos en mi corazón 💗</h2>
-      <p>Todos nuestros recuerdos tienen un lugar especial en mí.</p>
-      <div class="heart-wrap">
-        <div id="photoHeart" class="photo-heart"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="screen-music" class="screen music">
-    <button class="back-btn" data-go="screen-ask">← Volver</button>
-    <div class="card">
-      <h2>Playlist y frases bonitas 💛</h2>
-      <p>Que cada canción te recuerde lo mucho que te amo.</p>
-      <div id="playlist" class="music-list"></div>
-    </div>
-  </section>
-
-  <button id="audioToggle" class="audio-control" hidden>🔊 Música</button>
-  <audio id="backgroundAudio" loop preload="auto"></audio>
-
+  <section id="screen-fall" class="screen fall active"><div class="sunflower-decoration one">🌻</div><div class="sunflower-decoration two">🌻</div><div id="fallContainer"></div><div class="card"><h1>Primavera 🌻</h1><p>Para vos, mi amor, con cada detalle te quiero decir que te amo muchísimo.</p><button id="startButton" class="primary-btn">Entrar</button></div></section>
+  <section id="screen-ask" class="screen ask"><button class="back-btn" data-go="screen-fall">← Volver</button><div class="card"><h1>Elige tu detalle 💛</h1><div class="options"><button class="opt-btn" data-go="screen-tulips">Sí, súper sí 💖</button><button class="opt-btn" data-go="screen-heart">Sí, guapo, precioso, te amo 💗</button><button class="opt-btn" data-go="screen-music">Sí, mi amor, te amo 💞</button></div></div></section>
+  <section id="screen-tulips" class="screen tulips"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card"><div class="bouquet">🌻🌻🌻</div><h2>Un ramo para vos 🌻</h2><p>Porque cada día contigo florece algo más bonito en mi vida.</p></div></section>
+  <section id="screen-heart" class="screen heart"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card"><h2>16 momentos en mi corazón 💗</h2><p>Todos nuestros recuerdos tienen un lugar especial en mí.</p><div class="heart-wrap"><div id="photoHeart" class="photo-heart"></div></div></div></section>
+  <section id="screen-music" class="screen music"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="card"><h2>Playlist y frases bonitas 💛</h2><p>Que cada canción te recuerde lo mucho que te amo.</p><div id="playlist" class="music-list"></div></div></section>
+  <button id="audioToggle" class="audio-control" hidden>🔊 Música</button><audio id="backgroundAudio" loop preload="auto"></audio>
   <script>
     const assetUrl=(folder,name)=>folder+'/'+encodeURIComponent(name);
     const backgroundSong='TWICE - YES or YES - (Sub Español) MV.mp3';
     const loveSong='TWICE What is love ; sub español.mp3';
-    const songs=[
-      {file:'TWICE - LIKEY - (Sub Español) MV.mp3',title:'TWICE — LIKEY',icon:'🌼',quote:'Con vos, cada momento se vuelve más hermoso.'},
-      {file:loveSong,title:'TWICE — What Is Love?',icon:'🌸',quote:'Te amo más de lo que las palabras pueden decir.'},
-      {file:'TXT-Run Away (Sub. Español).mp3',title:'TXT — Run Away',icon:'✨',quote:'Con vos, cualquier lugar se siente como hogar.'},
-      {file:"WINNER - 'MILLIONS' M V.mp3",title:'WINNER — Millions',icon:'💐',quote:'Entre millones, siempre te elegiría a vos.'},
-      {file:'iKON - ‘사랑을 했다(LOVE SCENARIO)’ M V.mp3',title:'iKON — Love Scenario',icon:'💞',quote:'Nuestra historia es mi escenario favorito.'},
-      {file:'Callejeros - 9 de Julio (Letra).mp3',title:'Callejeros — 9 de Julio',icon:'🎶',quote:'Cada recuerdo nuestro tiene su propia canción.'},
-      {file:'MILO J, BHAVI - OJALA.mp3',title:'MILO J, BHAVI — OJALÁ',icon:'🌙',quote:'Ojalá podamos compartir muchísimos momentos más.'}
-    ];
-
-    const audio=document.getElementById('backgroundAudio'),audioToggle=document.getElementById('audioToggle');
-    let currentSong='';
-
-    function updateAudioButton(){
-      audioToggle.hidden=false;
-      audioToggle.textContent=audio.paused?'▶ Música':'🔊 Música';
-    }
-
-    async function setSong(song){
-      const file=typeof song==='string'?song:song.file;
-      if(currentSong===file&&!audio.paused)return;
-      currentSong=file;
-      audio.src=assetUrl('canciones',file);
-      try{await audio.play();}catch(e){}
-      updateAudioButton();
-    }
-
-    function stopMusic(){
-      audio.pause();
-      audio.currentTime=0;
-      currentSong='';
-      updateAudioButton();
-    }
-
-    async function goTo(id){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if(id==='screen-ask')await setSong(backgroundSong);
-      if(id!=='screen-ask'&&id!=='screen-music'){stopMusic();}
-      if(id==='screen-music')await setSong(songs[0]);
-    }
-
-    document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.go)));
-    document.getElementById('startButton').addEventListener('click',()=>goTo('screen-ask'));
-
-    audioToggle.addEventListener('click',async()=>{
-      if(audio.paused){
-        if(!currentSong)await setSong(backgroundSong);
-        else await audio.play();
-      }else audio.pause();
-      updateAudioButton();
-    });
-
-    const playlist=document.getElementById('playlist');
-    songs.forEach(song=>{
-      const row=document.createElement('div');
-      row.className='song';
-      row.innerHTML=`
-        <div class="song-info">
-          <span class="song-icon">${song.icon}</span>
-          <div class="song-text">
-            <strong>${song.title}</strong>
-            <span>${song.quote}</span>
-          </div>
-        </div>
-        <div class="song-quote">“${song.quote}”</div>
-      `;
-      playlist.appendChild(row);
-    });
-
-    const photoNames=['foto 1.jpg','foto 2.JPEG','foto 3.jpeg','foto 4.jpeg','foto 5.jpeg','foto 6.jpeg','foto 7.jpeg','foto 8.jpeg','foto 9.jpeg','foto 10.jpeg','foto 11.JPEG','foto 12.JPEG','foto 13.jpeg','foto 14.jpeg','foto 15.jpeg','foto 16.jpeg'];
-    const collage=document.getElementById('photoHeart');
-    photoNames.forEach((name,index)=>{
-      const photo=document.createElement('img');
-      photo.className='photo';
-      photo.src=assetUrl('fotos',name);
-      photo.alt=`Foto ${index + 1}`;
-      photo.loading='lazy';
-      collage.appendChild(photo);
-    });
-
-    for(let i=0;i<18;i++){
-      const flower=document.createElement('div');
-      flower.className='falling-flower';
-      flower.textContent=['🌻','🌷','🌸'][i%3];
-      flower.style.left=Math.random()*100+'%';
-      flower.style.animationDuration=(7+Math.random()*6)+'s';
-      flower.style.fontSize=(1.1+Math.random()*1.3)+'rem';
-      flower.style.opacity=(.45+Math.random()*.4).toFixed(2);
-      flower.style.animationDelay=(Math.random()*1.5)+'s';
-      document.getElementById('fallContainer').appendChild(flower);
-    }
-
-    function sunflowerBurst(x,y){
-      for(let i=0;i<8;i++){
-        const burst=document.createElement('span');
-        burst.className='burst-flower';
-        burst.textContent='🌻';
-        burst.style.left=x+'px';
-        burst.style.top=y+'px';
-        burst.style.transform=`translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
-        burst.style.animationDelay=(i*0.04)+'s';
-        document.body.appendChild(burst);
-        setTimeout(()=>burst.remove(),900);
-      }
-    }
-
-    document.addEventListener('pointerdown',e=>sunflowerBurst(e.clientX,e.clientY));
-    document.addEventListener('keydown',e=>{if(e.key!=='Tab')sunflowerBurst(innerWidth/2,innerHeight/2)});
+    const songs=[{file:'TWICE - LIKEY - (Sub Español) MV.mp3',title:'TWICE — LIKEY',icon:'🌼',quote:'Con vos, cada momento se vuelve más hermoso.'},{file:loveSong,title:'TWICE — What Is Love?',icon:'🌸',quote:'Te amo más de lo que las palabras pueden decir.'},{file:'TXT-Run Away (Sub. Español).mp3',title:'TXT — Run Away',icon:'✨',quote:'Con vos, cualquier lugar se siente como hogar.'},{file:"WINNER - 'MILLIONS' M V.mp3",title:'WINNER — Millions',icon:'💐',quote:'Entre millones, siempre te elegiría a vos.'},{file:'iKON - ‘사랑을 했다(LOVE SCENARIO)’ M V.mp3',title:'iKON — Love Scenario',icon:'💞',quote:'Nuestra historia es mi escenario favorito.'},{file:'Callejeros - 9 de Julio (Letra).mp3',title:'Callejeros — 9 de Julio',icon:'🎶',quote:'Cada recuerdo nuestro tiene su propia canción.'},{file:'MILO J, BHAVI - OJALA.mp3',title:'MILO J, BHAVI — OJALÁ',icon:'🌙',quote:'Ojalá podamos compartir muchísimos momentos más.'}];
+    const audio=document.getElementById('backgroundAudio'),audioToggle=document.getElementById('audioToggle');let currentSong='';
+    function updateAudioButton(){audioToggle.hidden=false;audioToggle.textContent=audio.paused?'▶ Música':'🔊 Música'}
+    async function setSong(song){const file=typeof song==='string'?song:song.file;if(currentSong===file&&!audio.paused)return;audio.pause();audio.currentTime=0;currentSong=file;audio.src=assetUrl('canciones',file);try{await audio.play()}catch(e){}updateAudioButton()}
+    function stopMusic(){audio.pause();audio.currentTime=0;currentSong='';updateAudioButton()}
+    async function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='screen-ask')await setSong(backgroundSong);else if(id==='screen-tulips')await setSong(loveSong);else if(id==='screen-music')await setSong(songs[0]);else stopMusic()}
+    document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.go)));document.getElementById('startButton').addEventListener('click',()=>goTo('screen-ask'));
+    audioToggle.addEventListener('click',async()=>{if(audio.paused){if(!currentSong)await setSong(backgroundSong);else await audio.play()}else audio.pause();updateAudioButton()});
+    const playlist=document.getElementById('playlist');songs.forEach(song=>{const row=document.createElement('div');row.className='song';row.innerHTML=`<div class="song-info"><span class="song-icon">${song.icon}</span><div class="song-text"><strong>${song.title}</strong><span>${song.quote}</span></div></div><div class="song-quote">“${song.quote}”</div>`;playlist.appendChild(row)});
+    const photoNames=['foto 1.jpg','foto 2.JPEG','foto 3.jpeg','foto 4.jpeg','foto 5.jpeg','foto 6.jpeg','foto 7.jpeg','foto 8.jpeg','foto 9.jpeg','foto 10.jpeg','foto 11.JPEG','foto 12.JPEG','foto 13.jpeg','foto 14.jpeg','foto 15.jpeg','foto 16.jpeg'];const collage=document.getElementById('photoHeart');photoNames.forEach((name,index)=>{const photo=document.createElement('img');photo.className='photo';photo.src=assetUrl('fotos',name);photo.alt=`Foto ${index+1}`;photo.loading='lazy';collage.appendChild(photo)});
+    for(let i=0;i<18;i++){const flower=document.createElement('div');flower.className='falling-flower';flower.textContent=['🌻','🌷','🌸'][i%3];flower.style.left=Math.random()*100+'%';flower.style.animationDuration=7+Math.random()*6+'s';flower.style.fontSize=1.1+Math.random()*1.3+'rem';flower.style.animationDelay=Math.random()*1.5+'s';document.getElementById('fallContainer').appendChild(flower)}
+    function sunflowerBurst(x,y){for(let i=0;i<8;i++){const burst=document.createElement('span');burst.className='burst-flower';burst.textContent='🌻';burst.style.left=x+'px';burst.style.top=y+'px';burst.style.animationDelay=i*.04+'s';document.body.appendChild(burst);setTimeout(()=>burst.remove(),900)}}document.addEventListener('pointerdown',e=>sunflowerBurst(e.clientX,e.clientY));document.addEventListener('keydown',e=>{if(e.key!=='Tab')sunflowerBurst(innerWidth/2,innerHeight/2)});
   </script>
 </body>
 </html>
