@@ -7,172 +7,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--dusk:#2c1b3d;--dusk2:#4a2a4f;--yellow:#f5b942;--pink:#e8547c;--green:#3f7a45;--cream:#fff6e6;--ink:#2c1b3d}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--dusk);color:var(--cream);font-family:Quicksand,sans-serif}.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);transition:.45s ease;gap:18px;padding:28px 24px;text-align:center}.screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}.screen h1,.screen h2{margin:0;font-family:'Playfair Display',serif;line-height:1.1}.screen h1{font-size:clamp(2.3rem,5vw,4rem)}.screen h2{font-size:clamp(2rem,3vw,3rem)}.screen p{max-width:700px;line-height:1.6;font-size:1.05rem;margin:0;color:rgba(255,246,230,.9)}
-#screen-fall{background:radial-gradient(circle at top,#4a2a4f 0%,#2c1b3d 52%,#1c1028 100%)}
-#screen-fall h1{font-style:italic}.press-btn,.opt-btn,.back-btn,.audio-control,.song button{border:none;border-radius:999px;cursor:pointer;transition:transform .2s ease,filter .2s ease;box-shadow:0 12px 24px rgba(0,0,0,.18)}.press-btn,.opt-btn{padding:16px 26px;background:linear-gradient(135deg,#f5b942,#ffdd7a);color:var(--ink);font-weight:700;font-size:1.05rem}.press-btn:hover,.opt-btn:hover,.back-btn:hover,.audio-control:hover,.song button:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.02)}
-.back-btn{position:absolute;top:20px;left:20px;padding:10px 16px;background:rgba(255,255,255,.1);color:var(--cream);font-weight:600}.audio-control{position:fixed;right:20px;top:20px;padding:10px 16px;background:rgba(255,255,255,.1);color:var(--cream);font-weight:700;z-index:20}.options{display:grid;grid-template-columns:repeat(2,minmax(170px,1fr));gap:16px;width:min(560px,88vw)}.opt-btn{width:100%}.opt-1{background:linear-gradient(135deg,#ffca6b,#f5b942)}.opt-2{background:linear-gradient(135deg,#ff9fc4,#e8547c);color:#fff}.opt-3{background:linear-gradient(135deg,#c9f5b3,#6dcf80);color:var(--ink)}.opt-4{background:linear-gradient(135deg,#f4d7ff,#d4a8ff);color:var(--ink)}
-.fall-container{position:absolute;inset:0;overflow:hidden;pointer-events:none}.falling-flower{position:absolute;top:-12vh;left:0;width:18px;height:18px;border-radius:50% 70% 50% 70%;background:radial-gradient(circle at 30% 30%,#fff2b0,#f5b942 45%,#ef8b66 100%);opacity:.8;box-shadow:0 0 12px rgba(245,185,66,.35);animation:fall linear forwards}.falling-flower:nth-child(odd){background:radial-gradient(circle at 30% 30%,#ffd7ec,#f77caf 46%,#d45885 100%)}.falling-flower:nth-child(3n){background:radial-gradient(circle at 30% 30%,#dff7d8,#7ecb7f 46%,#488d56 100%)}
-@keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}18%{opacity:.9}100%{transform:translate3d(8px,115vh,0) rotate(360deg);opacity:0}}.bouquet{display:flex;align-items:flex-end;justify-content:center;gap:10px;flex-wrap:wrap;transform:translateY(10px)}.tulip{position:relative;width:46px;height:130px;display:flex;align-items:flex-end;justify-content:center}.tulip:before{content:"";position:absolute;bottom:0;width:6px;height:78px;border-radius:6px;background:#2d6b3d;box-shadow:0 0 0 2px rgba(255,255,255,.05)}.tulip:after{content:"";position:absolute;bottom:46px;width:40px;height:44px;background:linear-gradient(135deg,#f5b942,#e8547c);border-radius:50% 60% 50% 60%;transform:rotate(12deg);box-shadow:inset -8px -8px rgba(255,255,255,.12)}.tulip:nth-child(2n):after{background:linear-gradient(135deg,#f7d07c,#f3a95e)}.tulip:nth-child(3n):after{background:linear-gradient(135deg,#ffb1c6,#ea4d7d)}.tulip:nth-child(4n):after{background:linear-gradient(135deg,#d7f7bd,#67b86b)}
-.screen.tulips,.screen.flower,.screen.heart,.screen.music{background:linear-gradient(180deg,#44254d 0%,#2b1d3d 48%,#1b1329 100%)}
-#bigSun{position:relative;width:190px;height:190px;display:grid;place-items:center}.sunflower-big{position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center}.sunflower-big:before{content:"";position:absolute;width:86px;height:86px;border-radius:50%;background:radial-gradient(circle,#fff2a8,#f4c14b 40%,#d98d2b 100%);box-shadow:0 0 30px rgba(245,185,66,.4)}.sunflower-big .petal{position:absolute;width:26px;height:76px;border-radius:40% 40% 50% 50%;background:linear-gradient(180deg,#f5d76d,#f39d39);transform-origin:center 90px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}.sunflower-big .petal:before{content:"";position:absolute;inset:12px 8px 12px 8px;border-radius:50%;background:rgba(255,255,255,.08)}
-#screen-flower p{font-size:1.15rem}
-.photos{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:12px;width:min(700px,90vw);max-height:44vh;overflow:auto;padding-right:6px}.photos img{width:100%;height:150px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.15);box-shadow:0 10px 18px rgba(0,0,0,.18)}
-.song-list{display:flex;flex-direction:column;gap:12px;width:min(560px,88vw);max-height:55vh;overflow:auto;padding-right:8px}.song{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);box-shadow:0 8px 18px rgba(0,0,0,.12)}.song span{font-weight:600;text-align:left}.song button{padding:10px 14px;background:linear-gradient(135deg,#f5b942,#f7dc87);color:var(--ink);font-weight:700}
-#audioHint{font-size:.95rem;opacity:.8}
-@media(max-width:500px){.options{grid-template-columns:1fr}.bouquet{transform:scale(.78);margin:-15px 0}.photos img{height:105px}.screen{padding-left:14px;padding-right:14px}}
+:root{--dusk:#2c1b3d;--dusk2:#4a2a4f;--yellow:#f5b942;--pink:#e8547c;--green:#3f7a45;--cream:#fff6e6;--ink:#2c1b3d}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--dusk);color:var(--cream);font-family:Quicksand,sans-serif}.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);transition:.45s ease;gap:18px;padding:28px 24px;text-align:center}.screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none}.screen h1,.screen h2{margin:0;font-family:'Playfair Display',serif;line-height:1.1}.screen h1{font-size:clamp(2.3rem,5vw,4rem)}.screen h2{font-size:clamp(2rem,3vw,3rem)}.screen p{max-width:700px;line-height:1.6;font-size:1.05rem;margin:0;color:rgba(255,246,230,.9)}#screen-fall{background:radial-gradient(circle at top,#4a2a4f,#2c1b3d 52%,#1c1028)}#screen-fall h1{font-style:italic}.press-btn,.opt-btn,.back-btn,.audio-control,.song button{border:none;border-radius:999px;cursor:pointer;transition:transform .2s ease,filter .2s ease;box-shadow:0 12px 24px rgba(0,0,0,.18)}.press-btn,.opt-btn{padding:16px 26px;background:linear-gradient(135deg,#f5b942,#ffdd7a);color:var(--ink);font-weight:700;font-size:1.05rem}.press-btn:hover,.opt-btn:hover,.back-btn:hover,.audio-control:hover,.song button:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.02)}.back-btn{position:absolute;top:20px;left:20px;padding:10px 16px;background:rgba(255,255,255,.1);color:var(--cream);font-weight:600}.audio-control{position:fixed;right:20px;top:20px;padding:10px 16px;background:rgba(255,255,255,.1);color:var(--cream);font-weight:700;z-index:20}.options{display:grid;grid-template-columns:repeat(2,minmax(170px,1fr));gap:16px;width:min(560px,88vw)}.opt-btn{width:100%}.opt-1{background:linear-gradient(135deg,#ffca6b,#f5b942)}.opt-2{background:linear-gradient(135deg,#ff9fc4,#e8547c);color:#fff}.opt-3{background:linear-gradient(135deg,#c9f5b3,#6dcf80);color:var(--ink)}.opt-4{background:linear-gradient(135deg,#f4d7ff,#d4a8ff);color:var(--ink)}.fall-container{position:absolute;inset:0;overflow:hidden;pointer-events:none}.falling-flower{position:absolute;top:-12vh;width:18px;height:18px;border-radius:50% 70% 50% 70%;background:radial-gradient(circle at 30% 30%,#fff2b0,#f5b942 45%,#ef8b66);opacity:.8;animation:fall linear forwards}.falling-flower:nth-child(odd){background:radial-gradient(circle at 30% 30%,#ffd7ec,#f77caf 46%,#d45885)}.falling-flower:nth-child(3n){background:radial-gradient(circle at 30% 30%,#dff7d8,#7ecb7f 46%,#488d56)}@keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0);opacity:0}18%{opacity:.9}100%{transform:translate3d(8px,115vh,0) rotate(360deg);opacity:0}}.screen.tulips,.screen.flower,.screen.heart,.screen.music{background:linear-gradient(180deg,#44254d,#2b1d3d 48%,#1b1329)}.bouquet{display:flex;align-items:flex-end;justify-content:center;gap:10px}.tulip{position:relative;width:46px;height:130px}.tulip:before{content:"";position:absolute;bottom:0;left:20px;width:6px;height:78px;border-radius:6px;background:#2d6b3d}.tulip:after{content:"";position:absolute;bottom:46px;left:3px;width:40px;height:44px;background:linear-gradient(135deg,#f5b942,#e8547c);border-radius:50% 60% 50% 60%}.tulip:nth-child(2n):after{background:linear-gradient(135deg,#f7d07c,#f3a95e)}.tulip:nth-child(3n):after{background:linear-gradient(135deg,#ffb1c6,#ea4d7d)}.photos{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:12px;width:min(700px,90vw);max-height:44vh;overflow:auto}.photos img{width:100%;height:150px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.15)}.song-list{display:flex;flex-direction:column;gap:12px;width:min(560px,88vw);max-height:55vh;overflow:auto}.song{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}.song span{text-align:left;font-weight:600}.song button{padding:10px 14px;background:linear-gradient(135deg,#f5b942,#f7dc87);color:var(--ink);font-weight:700}#audioHint{font-size:.95rem;opacity:.8}@media(max-width:500px){.options{grid-template-columns:1fr}.bouquet{transform:scale(.78);margin:-15px 0}.photos img{height:105px}.screen{padding-left:14px;padding-right:14px}}
 </style>
 </head>
 <body>
-<section id="screen-fall" class="screen fall active">
-  <div id="fallContainer" class="fall-container"></div>
-  <h1>Tengo algo para vos 🌻</h1>
-  <button class="press-btn" id="startButton">Presioná</button>
-  <p id="audioHint">♫ Sin música aún</p>
-</section>
-
-<section id="screen-ask" class="screen">
-  <button class="back-btn" data-go="screen-fall">← Volver</button>
-  <h1>¿Te gustó?</h1>
-  <div class="options">
-    <button class="opt-btn opt-1" data-go="screen-tulips">Sí 💐</button>
-    <button class="opt-btn opt-2" data-go="screen-flower">Por supuesto 🌼</button>
-    <button class="opt-btn opt-3" data-go="screen-heart">Mi favorita 💛</button>
-    <button class="opt-btn opt-4" data-go="screen-music">Escuchar algo</button>
-  </div>
-</section>
-
-<section id="screen-tulips" class="screen tulips">
-  <button class="back-btn" data-go="screen-ask">← Volver</button>
-  <div class="bouquet"></div>
-</section>
-
-<section id="screen-flower" class="screen flower">
-  <button class="back-btn" data-go="screen-ask">← Volver</button>
-  <div id="bigSun" class="sunflower-big"></div>
-  <h2>Para la más hermosa 🌻</h2>
-  <p>Te merecés mil flores, una mirada llena de sol y todo el cielo en tus manos.</p>
-</section>
-
-<section id="screen-heart" class="screen heart">
-  <button class="back-btn" data-go="screen-ask">← Volver</button>
-  <h2>Feliz inicio de primavera, mi amor 💛</h2>
-  <p>Un recuerdo por cada sonrisa.</p>
-  <div id="photoGrid" class="photos"></div>
-</section>
-
-<section id="screen-music" class="screen music">
-  <button class="back-btn" data-go="screen-ask">← Volver</button>
-  <h2>Playlist de la primavera</h2>
-  <div id="songs" class="song-list"></div>
-</section>
-
-<button id="audioToggle" class="audio-control" hidden>🔊 Música</button>
-<audio id="backgroundAudio" loop preload="auto"></audio>
-
+<section id="screen-fall" class="screen fall active"><div id="fallContainer" class="fall-container"></div><h1>Tengo algo para vos 🌻</h1><button class="press-btn" id="startButton">Presioná</button><p id="audioHint">♫ Sin música aún</p></section>
+<section id="screen-ask" class="screen"><button class="back-btn" data-go="screen-fall">← Volver</button><h1>¿Te gustó?</h1><div class="options"><button class="opt-btn opt-1" data-go="screen-tulips">Sí 💐</button><button class="opt-btn opt-2" data-go="screen-flower">Por supuesto 🌼</button><button class="opt-btn opt-3" data-go="screen-music">Playlist y frases 💛</button><button class="opt-btn opt-4" data-go="screen-heart">Ver nuestros recuerdos 📸</button></div></section>
+<section id="screen-tulips" class="screen tulips"><button class="back-btn" data-go="screen-ask">← Volver</button><div class="bouquet"></div><h2>Un ramo para vos 🌷</h2><p>Que esta primavera te encuentre sonriendo.</p></section>
+<section id="screen-flower" class="screen flower"><button class="back-btn" data-go="screen-ask">← Volver</button><div id="bigSun" class="sunflower-big">🌻</div><h2>Para la más hermosa 🌻</h2><p>Te merecés mil flores, una mirada llena de sol y todo el cielo en tus manos.</p></section>
+<section id="screen-heart" class="screen heart"><button class="back-btn" data-go="screen-ask">← Volver</button><h2>Feliz inicio de primavera, mi amor 💛</h2><p>Un recuerdo por cada sonrisa.</p><div id="photoGrid" class="photos"></div></section>
+<section id="screen-music" class="screen music"><button class="back-btn" data-go="screen-ask">← Volver</button><h2>Playlist y frases de primavera 💛</h2><p>Que cada canción te recuerde lo especial que sos.</p><p>“Donde florece el amor, siempre es primavera.” 🌻</p><p>“Sos mi lugar favorito en cualquier estación.”</p><div id="songs" class="song-list"></div></section>
+<button id="audioToggle" class="audio-control" hidden>🔊 Música</button><audio id="backgroundAudio" loop preload="auto"></audio>
 <script>
-const assetUrl=(folder,name)=>folder+'/'+encodeURIComponent(name);
-const backgroundSong='TWICE - YES or YES - (Sub Español) MV.mp3';
-const photos=['fondo.jpeg','foto 1.jpg','foto 2.JPEG','foto 3.jpeg','foto 4.jpeg','foto 5.jpeg','foto 6.jpeg','foto 7.jpeg','foto 8.jpeg','foto 9.jpeg','foto 10.jpeg','foto 11.JPEG','foto 12.JPEG','foto 13.jpeg','foto 14.jpeg','foto 15.jpeg'];
-const songs=['TWICE What is love ; sub español.mp3','MILO J, BHAVI - OJALA.mp3','iKON - (LOVE SCENARIO)’ M V.mp3','TXT-Run Away (Sub. Español).mp3','Callejeros - 9 de Julio (Letra).mp3','TWICE - LOVE me.mp3'];
-
-const audio=document.getElementById('backgroundAudio'),toggle=document.getElementById('audioToggle');
-audio.src=assetUrl('canciones',backgroundSong);audio.volume=.45;
-
-function goTo(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-async function startMusic(){
-  try{
-    await audio.play();
-    document.getElementById('audioHint').textContent='♫ Reproduciendo música';
-    toggle.hidden=false;
-    toggle.textContent='🔊 Música';
-  }catch(e){
-    document.getElementById('audioHint').textContent='♫ Permití el audio para escuchar la playlist';
-  }
-}
-
-toggle.addEventListener('click',()=>{
-  if(audio.paused){
-    audio.play();
-    toggle.textContent='🔊 Música';
-    document.getElementById('audioHint').textContent='♫ Reproduciendo música';
-  }else{
-    audio.pause();
-    toggle.textContent='🔇 Música';
-    document.getElementById('audioHint').textContent='♫ Música pausada';
-  }
-});
-
-document.getElementById('startButton').addEventListener('click',()=>{
-  startMusic();
-  goTo('screen-ask');
-});
-
-document.querySelectorAll('[data-go]').forEach(button=>{
-  button.addEventListener('click',()=>goTo(button.dataset.go));
-});
-
-for(let i=0;i<18;i++){
-  const f=document.createElement('div');
-  f.className='falling-flower';
-  f.style.left=Math.random()*100+'%';
-  f.style.animationDuration=(5+Math.random()*7)+'s';
-  f.style.animationDelay=(-Math.random()*5)+'s';
-  f.style.transform=`scale(${0.7+Math.random()*1.2})`;
-  document.getElementById('fallContainer').appendChild(f);
-}
-
-function fillPhotos(id){
-  const box=document.getElementById(id);
-  photos.forEach((name,i)=>{
-    const img=document.createElement('img');
-    img.src=assetUrl('fotos',name);
-    img.alt='Recuerdo '+(i+1);
-    img.loading='lazy';
-    box.appendChild(img);
-  });
-}
-
-for(let i=0;i<12;i++){
-  const p=document.createElement('i');
-  p.className='petal';
-  p.style.transform=`rotate(${i*30}deg)`;
-  document.getElementById('bigSun').appendChild(p);
-}
-
-const bouquet=document.querySelector('.bouquet');
-Array.from({length:7},()=>{
-  const tulip=document.createElement('div');
-  tulip.className='tulip';
-  bouquet.appendChild(tulip);
-});
-
-fillPhotos('photoGrid');
-
-const songBox=document.getElementById('songs');
-songs.forEach((name)=>{
-  const row=document.createElement('div');
-  row.className='song';
-  const label=document.createElement('span');
-  label.textContent=name;
-  const btn=document.createElement('button');
-  btn.type='button';
-  btn.textContent='▶';
-  btn.addEventListener('click',()=>{
-    audio.src=assetUrl('canciones',name);
-    audio.play();
-    toggle.hidden=false;
-    toggle.textContent='🔊 Música';
-    document.getElementById('audioHint').textContent='♫ Reproduciendo música';
-  });
-  row.appendChild(label);
-  row.appendChild(btn);
-  songBox.appendChild(row);
-});
+const assetUrl=(folder,name)=>folder+'/'+encodeURIComponent(name);const backgroundSong='TWICE - YES or YES - (Sub Español) MV.mp3';const photos=['fondo.jpeg','foto 1.jpg','foto 2.JPEG','foto 3.jpeg','foto 4.jpeg','foto 5.jpeg','foto 6.jpeg','foto 7.jpeg','foto 8.jpeg','foto 9.jpeg','foto 10.jpeg','foto 11.JPEG','foto 12.JPEG','foto 13.jpeg','foto 14.jpeg','foto 15.jpeg'];const songs=['TWICE What is love ; sub español.mp3','MILO J, BHAVI - OJALA.mp3','iKON - (LOVE SCENARIO)’ M V.mp3','TXT-Run Away (Sub. Español).mp3','Callejeros - 9 de Julio (Letra).mp3','TWICE - LOVE me.mp3'];const audio=document.getElementById('backgroundAudio'),toggle=document.getElementById('audioToggle');audio.src=assetUrl('canciones',backgroundSong);audio.volume=.45;
+function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}async function startMusic(){try{await audio.play();document.getElementById('audioHint').textContent='♫ Reproduciendo música';toggle.hidden=false}catch(e){document.getElementById('audioHint').textContent='♫ Permití el audio para escuchar la playlist'}}toggle.addEventListener('click',()=>{if(audio.paused){audio.play();toggle.textContent='🔊 Música'}else{audio.pause();toggle.textContent='🔇 Música'}});document.getElementById('startButton').addEventListener('click',()=>{startMusic();goTo('screen-ask')});document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.go)));
+for(let i=0;i<18;i++){const f=document.createElement('div');f.className='falling-flower';f.style.left=Math.random()*100+'%';f.style.animationDuration=5+Math.random()*7+'s';f.style.animationDelay=-Math.random()*5+'s';document.getElementById('fallContainer').appendChild(f)}const bouquet=document.querySelector('.bouquet');for(let i=0;i<7;i++){const t=document.createElement('div');t.className='tulip';bouquet.appendChild(t)}function fillPhotos(id){const box=document.getElementById(id);photos.forEach((name,i)=>{const img=document.createElement('img');img.src=assetUrl('fotos',name);img.alt='Recuerdo '+(i+1);img.loading='lazy';box.appendChild(img)})}fillPhotos('photoGrid');const songBox=document.getElementById('songs');songs.forEach(name=>{const row=document.createElement('div');row.className='song';const label=document.createElement('span');label.textContent=name;const btn=document.createElement('button');btn.type='button';btn.textContent='▶';btn.addEventListener('click',()=>{audio.src=assetUrl('canciones',name);audio.play();toggle.hidden=false;toggle.textContent='🔊 Música'});row.append(label,btn);songBox.appendChild(row)});
 </script>
 </body>
 </html>
